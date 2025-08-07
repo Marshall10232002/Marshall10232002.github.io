@@ -1,6 +1,6 @@
 // ----- Tab-style page switching -----
-const navLinks = document.querySelectorAll('nav a');
-const sections = document.querySelectorAll('.page-section');
+const navLinks  = document.querySelectorAll('nav a');
+const sections  = document.querySelectorAll('.page-section');
 
 function showSection(id) {
   sections.forEach(sec =>
@@ -11,12 +11,14 @@ function showSection(id) {
   );
 }
 
-/* 1️⃣  Always start on About  */
+/* 1️⃣  Always start on About */
 showSection('about');
-location.hash = '#about';   // keeps the URL consistent—optional
+window.scrollTo(0, 0);        // ⬅️ jump to top
+location.hash = '#about';     // keep URL consistent (optional)
 
-/* 2️⃣  Handle nav clicks     */
+/* 2️⃣  Handle nav clicks */
 navLinks.forEach(link => link.addEventListener('click', e => {
   e.preventDefault();
   showSection(link.hash.slice(1));
+  window.scrollTo(0, 0);      // also scroll to top after each click
 }));
