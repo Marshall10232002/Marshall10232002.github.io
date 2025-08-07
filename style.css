@@ -8,7 +8,7 @@ body{
 }
 
 /* ── Nav Bar ─────────────────────────────────── */
-header{border-bottom:1px solid #e2e2e2;margin-bottom:2rem;}
+header{border-bottom:1px solid #e2e2e2;margin-bottom:2rem;padding-bottom: 0.75rem;}
 nav ul{display:flex;justify-content:center;gap:2rem;list-style:none;}
 nav a{
   padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;
