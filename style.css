@@ -4,7 +4,7 @@ html{scroll-behavior:smooth;}
 body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   color:#222;background:#f7f7f7;line-height:1.6;
-  max-width:1000px;               /* narrower page */
+  max-width:1000px;          /* narrower page */
   margin-inline:auto;
   padding:2rem 1rem;
 }
@@ -12,15 +12,9 @@ body{
 /* ─────────────────────────  Nav Bar  ──────────────────────────── */
 header{margin-bottom:2rem;}
 nav{position:relative;padding-bottom:0.75rem;}
-nav::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;
-  height:1px;background:#e2e2e2;
-}
+nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#e2e2e2;}
 nav ul{display:flex;justify-content:center;gap:2rem;list-style:none;}
-nav a{
-  padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;
-  font-weight:500;transition:.25s;
-}
+nav a{padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;font-weight:500;transition:.25s;}
 nav a:hover{background:#eaeaea;}
 nav a.active{background:#000;color:#fff;}
 
@@ -30,33 +24,25 @@ section{margin-bottom:4rem;}
   background:#fff;border-radius:12px;padding:1.5rem 1.75rem;
   box-shadow:0 2px 6px rgba(0,0,0,.06);margin-bottom:1.75rem;
 }
-/* .card:hover{background:#f8f8f8;} */
-.card h3,.section-title{color:#7c7c7c !important;}   /* lighter gray */
+/* card hover removed here to avoid gray flash on About/Contact */
+
+/* headings */
+.card h3{color:#7c7c7c;}      /* lighter only inside cards */
+.section-title{color:#222;}   /* keep section titles dark */
 
 /* center intro text in Projects & Contact */
 #projects .section-title,#projects .section-sub,
-#contact  .section-title,#contact  .section-sub{
-  text-align:center;
-}
+#contact  .section-title,#contact  .section-sub{text-align:center;}
 
 /* ───────────────────────────  Profile  ───────────────────────── */
 .profile{text-align:center;}
-.profile img{
-  width:120px;height:120px;border-radius:75%;object-fit:cover;
-  display:block;margin-inline:auto;margin-bottom:1rem;
-}
+.profile img{width:120px;height:120px;border-radius:75%;object-fit:cover;display:block;margin-inline:auto;margin-bottom:1rem;}
 .profile h2{font-size:1.75rem;margin-bottom:.25rem;}
 .subtitle{color:#666;font-size:.9rem;}
 
 /* ───────────────────── Tags & Buttons  ───────────────────────── */
-.tag{
-  display:inline-block;background:#e0e0e0;border-radius:20px;
-  padding:.25rem .7rem;font-size:.8rem;margin:.25rem .15rem;
-}
-.btn,.btn-outline{
-  display:inline-block;margin-top:1rem;text-decoration:none;font-weight:600;
-  padding:.45rem 1.1rem;border-radius:6px;font-size:.9rem;
-}
+.tag{display:inline-block;background:#e0e0e0;border-radius:20px;padding:.25rem .7rem;font-size:.8rem;margin:.25rem .15rem;}
+.btn,.btn-outline{display:inline-block;margin-top:1rem;text-decoration:none;font-weight:600;padding:.45rem 1.1rem;border-radius:6px;font-size:.9rem;}
 .btn{background:#000;color:#fff;}
 .btn:hover{background:#333;}
 .btn-outline{border:1px solid #ccc;color:#444;}
@@ -67,13 +53,12 @@ section{margin-bottom:4rem;}
   display:grid;
   gap:1.5rem;
   grid-template-columns:repeat(3,1fr);
-  margin-top:2rem;              /* space below description */
+  margin-top:2rem;       /* space below description */
 }
-
 .card-link{display:block;text-decoration:none;color:inherit;}
 .card-link:visited,.card-link:hover,.card-link:active{color:inherit;}
 
-/* card + animation */
+/* project card + lift animation */
 .card-link .project-card{
   background:#fff;border-radius:12px;overflow:hidden;
   box-shadow:0 2px 6px rgba(0,0,0,.05);
@@ -85,12 +70,9 @@ section{margin-bottom:4rem;}
   box-shadow:0 8px 20px rgba(0,0,0,.15);
   cursor:pointer;
 }
-
-.project-card img{
-  width:100%;aspect-ratio:16/9;object-fit:cover;
-}
+.project-card img{width:100%;aspect-ratio:16/9;object-fit:cover;}
 .project-card .card-body{padding:1rem 1.25rem;flex:1;}
-.project-card h3{margin-bottom:.2rem;color:#222!important;}
+.project-card h3{margin-bottom:.2rem;color:#222;}
 .project-card .type{font-size:.8rem;color:#666;margin-bottom:.6rem;}
 .project-card .excerpt{font-size:.85rem;color:#555;margin-bottom:.8rem;}
 .tag-row{margin-bottom:.8rem;}
