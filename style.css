@@ -30,7 +30,7 @@ section{margin-bottom:4rem;}
   background:#fff;border-radius:12px;padding:1.5rem 1.75rem;
   box-shadow:0 2px 6px rgba(0,0,0,.06);margin-bottom:1.75rem;
 }
-.card:hover{background:#f8f8f8;}
+/* .card:hover{background:#f8f8f8;} */
 .card h3,.section-title{color:#7c7c7c !important;}   /* lighter gray */
 
 /* center intro text in Projects & Contact */
