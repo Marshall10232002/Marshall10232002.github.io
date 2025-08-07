@@ -1,43 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Marshall Chang | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- ── Header & Nav ─────────────────────────────── -->
   <header>
-    <h1>Marshall Chang</h1>
-    <p>Robotics · Mechatronics · Machine Learning</p>
+    <nav>
+      <ul>
+        <li><a href="#about"  class="active">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="#about" class="active">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
+  <!-- ── About Section ─────────────────────────────── -->
   <main>
-    <section id="about">
-      <h2>Welcome!</h2>
-      <p>This is my personal portfolio website for showcasing my projects and academic work.</p>
+    <section id="about" class="center">
+      <div class="profile">
+        <img src="images/profile.jpg" alt="Marshall Chang" />
+        <h2>Marshall Chang</h2>
+        <p class="subtitle">
+          Mechanical Engineering Student<br />
+          National Taiwan University · Class of 2025
+        </p>
+      </div>
+
+      <!-- About-me card -->
+      <div class="card">
+        <h3>About Me</h3>
+        <p>
+          I’m a robotics-obsessed engineer who blends <strong>mechanism design</strong>,
+          <strong>control theory</strong>, and a growing love for
+          <strong>machine&nbsp;learning</strong>. My goal is to build robots that make
+          daily life easier – from self-balancing spheres to agile quadrupeds.
+        </p>
+      </div>
+
+      <!-- Skills & Achievements (2-column grid) -->
+      <div class="grid">
+        <div class="card">
+          <h3>Technical Skills</h3>
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">ROS&nbsp;2</span>
+          <span class="tag">MuJoCo</span>
+          <span class="tag">Reinforcement&nbsp;Learning</span>
+          <span class="tag">SolidWorks / NX</span>
+        </div>
+
+        <div class="card">
+          <h3>Achievements&nbsp;&amp;&nbsp;Leadership</h3>
+          <ul>
+            <li>Google Devices HW Intern&nbsp;· 2024</li>
+            <li>Robotics Club President&nbsp;· 2023-24</li>
+            <li>1<sup>st</sup> Prize – NTU RoboCup&nbsp;· 2023</li>
+            <li>TOEFL&nbsp;102 / 120</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="card">
+        <h3>Education</h3>
+        <p><strong>B.S. in Mechanical Engineering</strong><br />
+           National Taiwan University · 2021 – 2025<br />
+           GPA 3.8 / 4.0<br />
+           Key coursework: Robust Control, Mechatronics, Deep RL</p>
+      </div>
     </section>
 
+    <!-- ── Projects Section ────────────────────────── -->
     <section id="projects">
-      <h2>Projects</h2>
-      <p>Project content coming soon...</p>
+      <h2 class="section-title">My Projects</h2>
+      <p class="section-sub">
+        A quick look at some things I’ve built – click “View details” for a deep dive.
+      </p>
+
+      <div class="projects-grid">
+        <!-- Project Card #1 -->
+        <article class="project-card">
+          <img src="images/spherical-robot.jpg" alt="Spherical robot" />
+          <div class="card-body">
+            <h3>Spherical Robot</h3>
+            <p class="type">Research Prototype</p>
+            <p class="excerpt">
+              Dual-DOF pendulum drive enabling omnidirectional motion with precise
+              trajectory tracking.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Python</span><span class="tag">C++</span
+              ><span class="tag">Control</span>
+            </div>
+            <a class="btn" href="projects/spherical-robot.html">View Details</a>
+          </div>
+        </article>
+
+        <!-- Duplicate ↑ for more projects -->
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Contact information will go here.</p>
+    <!-- ── Contact Section ─────────────────────────── -->
+    <section id="contact" class="center">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="section-sub">
+        Always up for a collaboration, a research chat, or just coffee!
+      </p>
+
+      <div class="card contact-card">
+        <div class="contact-row">
+          <span>📧</span>
+          <div>
+            <strong>Email</strong><br />
+            marshall@example.com
+          </div>
+        </div>
+        <div class="contact-row">
+          <span>📍</span>
+          <div>
+            <strong>Location</strong><br />
+            Taipei, Taiwan
+          </div>
+        </div>
+        <div class="social-row">
+          <a href="https://github.com/Marshall10232002" class="btn-outline">GitHub</a>
+          <a href="https://www.linkedin.com/in/your-link" class="btn-outline">LinkedIn</a>
+          <a href="mailto:marshall@example.com" class="btn">Send Email</a>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>© 2025 Marshall Chang</p>
-  </footer>
+  <footer>© 2025 Marshall Chang</footer>
+  <script src="script.js"></script>
 </body>
 </html>
