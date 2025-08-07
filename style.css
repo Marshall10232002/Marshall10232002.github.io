@@ -8,14 +8,23 @@ body{
 }
 
 /* ── Nav Bar ─────────────────────────────────── */
-header{border-bottom:1px solid #e2e2e2;margin-bottom:2rem;padding-bottom: 3rem;}
+header{margin-bottom:2rem;}
 nav ul{display:flex;justify-content:center;gap:2rem;list-style:none;}
 nav a{
   padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;
   font-weight:500;transition:.25s;
 }
 nav a:hover{background:#eaeaea;}
-nav a.active{background:#000;color:#fff;}
+
+/* draw thin line under nav, slightly below links */
+nav{position:relative;padding-bottom:0.75rem;}
+nav::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:1px;
+  background:#e2e2e2;
+}
 
 /* ── Sections & Cards ────────────────────────── */
 section{margin-bottom:4rem;}
