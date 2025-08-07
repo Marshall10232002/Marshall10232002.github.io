@@ -16,9 +16,7 @@ nav {
 }
 
 nav a {
-  margin: 0 1rem;
   text-decoration: none;
-  color: #0066cc;
 }
 
 footer {
@@ -39,6 +37,10 @@ nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+nav li {
+  list-style: none;
 }
 
 nav li a {
