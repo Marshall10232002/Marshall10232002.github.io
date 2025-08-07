@@ -1,4 +1,4 @@
-/* ── Base Reset ─────────────────────────────── */
+/* ── Reset & Base ───────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
@@ -9,26 +9,21 @@ body{
 
 /* ── Nav Bar ─────────────────────────────────── */
 header{margin-bottom:2rem;}
+nav{position:relative;padding-bottom:0.75rem;}
+nav::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;
+  height:1px;background:#e2e2e2;
+}
 nav ul{display:flex;justify-content:center;gap:2rem;list-style:none;}
 nav a{
   padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;
   font-weight:500;transition:.25s;
 }
 nav a:hover{background:#eaeaea;}
+nav a.active{background:#000;color:#fff;}
 
-/* draw thin line under nav, slightly below links */
-nav{position:relative;padding-bottom:0.75rem;}
-nav::after{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:0;
-  height:1px;
-  background:#e2e2e2;
-}
-
-/* ── Sections & Cards ────────────────────────── */
+/* ── Sections & Cards ───────────────────────── */
 section{margin-bottom:4rem;}
-.center{text-align:center;}
 .card{
   background:#fff;border-radius:12px;padding:1.5rem 1.75rem;
   box-shadow:0 2px 6px rgba(0,0,0,.06);margin-bottom:1.75rem;
@@ -38,13 +33,14 @@ section{margin-bottom:4rem;}
 .grid>.card{flex:1 1 260px;}
 
 /* ── Profile ─────────────────────────────────── */
+.profile{text-align:center;}
 .profile img{
-  width:120px;height:120px;border-radius:75%;object-fit:cover;margin-bottom:1rem;
+  width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:1rem;
 }
 .profile h2{font-size:1.75rem;margin-bottom:.25rem;}
 .subtitle{color:#666;font-size:.9rem;}
 
-/* ── Tags & Buttons ──────────────────────────── */
+/* ── Tags & Buttons ─────────────────────────── */
 .tag{
   display:inline-block;background:#e0e0e0;border-radius:20px;padding:.25rem .7rem;
   font-size:.8rem;margin:.25rem .15rem;
@@ -65,7 +61,8 @@ section{margin-bottom:4rem;}
 }
 .project-card{
   background:#fff;border-radius:12px;overflow:hidden;
-  box-shadow:0 2px 6px rgba(0,0,0,.05);display:flex;flex-direction:column;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  display:flex;flex-direction:column;
 }
 .project-card img{width:100%;aspect-ratio:4/3;object-fit:cover;}
 .project-card .card-body{padding:1rem 1.25rem;flex:1;}
@@ -82,6 +79,6 @@ section{margin-bottom:4rem;}
 /* ── Footer ──────────────────────────────────── */
 footer{text-align:center;font-size:.8rem;color:#888;margin-top:2rem;}
 
-/* ── Page Switching ──────────────────────────── */
+/* ── Page-Switching ──────────────────────────── */
 .page-section{display:none;}
 .page-section.active{display:block;}
