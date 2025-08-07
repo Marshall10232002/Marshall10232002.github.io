@@ -70,3 +70,6 @@ section { margin-bottom:4rem; }
 
 /* ── Footer ──────────────────────────────────── */
 footer { text-align:center; font-size:.8rem; color:#888; margin-top:2rem; }
+/* ── Tab-style page switching ──────────────── */
+.page-section { display: none; }
+.page-section.active { display: block; }

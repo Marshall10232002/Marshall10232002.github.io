@@ -1,14 +1,25 @@
-// Highlight nav link while scrolling
-const links = document.querySelectorAll('nav a');
-const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+// Grab nav links and page sections
+const navLinks  = document.querySelectorAll('nav a');
+const sections  = document.querySelectorAll('.page-section');
 
-function onScroll() {
-  const pos = window.scrollY + 100;
-  sections.forEach((sec, i) => {
-    if (pos >= sec.offsetTop && pos < sec.offsetTop + sec.offsetHeight) {
-      links.forEach(l => l.classList.remove('active'));
-      links[i].classList.add('active');
-    }
-  });
+function showSection(id) {
+  // Show the matching section, hide the rest
+  sections.forEach(sec =>
+    sec.classList.toggle('active', sec.id === id)
+  );
+  // Highlight the correct nav link
+  navLinks.forEach(link =>
+    link.classList.toggle('active', link.getAttribute('href') === `#${id}`)
+  );
 }
-document.addEventListener('scroll', onScroll);
+
+// Attach click handler to every nav link
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();                 // stop the jump-scroll
+    showSection(link.getAttribute('href').substring(1));
+  });
+});
+
+// Optional: show correct section if page is opened with #hash
+if (location.hash) showSection(location.hash.slice(1));
