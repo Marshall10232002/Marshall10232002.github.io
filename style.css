@@ -27,7 +27,7 @@ section{margin-bottom:4rem;}
 }
 .card:hover{background:#f8f8f8;}
 .card h3,
-.section-title{color:#7c7c7c !important;}   /* lighter gray headings */
+.section-title{color:#9c9c9c !important;}   /* lighter gray headings */
 .grid{display:flex;flex-wrap:wrap;gap:1rem;}
 .grid>.card{flex:1 1 260px;}
 
