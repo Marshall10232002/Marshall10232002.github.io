@@ -1,4 +1,4 @@
-// Page switching logic
+// ----- Tab-style page switching -----
 const navLinks = document.querySelectorAll('nav a');
 const sections = document.querySelectorAll('.page-section');
 
@@ -11,12 +11,12 @@ function showSection(id) {
   );
 }
 
-navLinks.forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();         // stop “jump” scrolling
-    showSection(link.hash.slice(1));
-  });
-});
+/* 1️⃣  Always start on About  */
+showSection('about');
+location.hash = '#about';   // keeps the URL consistent—optional
 
-// Show correct section if opened with a hash
-if (location.hash) showSection(location.hash.slice(1));
+/* 2️⃣  Handle nav clicks     */
+navLinks.forEach(link => link.addEventListener('click', e => {
+  e.preventDefault();
+  showSection(link.hash.slice(1));
+}));
