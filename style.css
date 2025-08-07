@@ -4,7 +4,7 @@ html{scroll-behavior:smooth;}
 body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   color:#222;background:#f7f7f7;line-height:1.6;
-  max-width:900px;margin-inline:auto;padding:2rem 1rem;
+  max-width:1200px;margin-inline:auto;padding:2rem 1rem;
 }
 
 /* ── Nav Bar ─────────────────────────────────── */
@@ -27,7 +27,7 @@ section{margin-bottom:4rem;}
 }
 .card:hover{background:#f8f8f8;}
 .card h3,
-.section-title{color:#555 !important;}   /* lighter gray headings */
+.section-title{color:#7c7c7c !important;}   /* lighter gray headings */
 .grid{display:flex;flex-wrap:wrap;gap:1rem;}
 .grid>.card{flex:1 1 260px;}
 
@@ -57,10 +57,7 @@ section{margin-bottom:4rem;}
 /* ── Project Cards ───────────────────────────── */
 .projects-grid{
   display:grid;gap:1.5rem;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-}
-@media (min-width:900px){
-  .projects-grid{grid-template-columns:repeat(3,1fr);}  /* three per row on desktop */
+  grid-template-columns:repeat(3, 1fr);
 }
 .project-card{
   background:#fff;border-radius:12px;overflow:hidden;
