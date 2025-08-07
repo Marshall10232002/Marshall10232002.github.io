@@ -27,3 +27,63 @@ footer {
   font-size: 0.8rem;
   color: #888;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li a {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #333;
+  background-color: transparent;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+nav li a:hover {
+  background-color: #e0e0e0;
+}
+
+nav li a.active {
+  background-color: #000;
+  color: #fff;
+}
+
+section {
+  background-color: #fff;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.profile {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.tag {
+  display: inline-block;
+  background: #e0e0e0;
+  padding: 0.3rem 0.8rem;
+  margin: 0.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
