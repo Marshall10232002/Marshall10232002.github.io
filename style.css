@@ -4,7 +4,7 @@ html{scroll-behavior:smooth;}
 body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   color:#222;background:#f7f7f7;line-height:1.6;
-  max-width:1000px;               /* page width */
+  max-width:1000px;
   margin-inline:auto;
   padding:2rem 1rem;
 }
@@ -14,23 +14,30 @@ header{margin-bottom:2rem;}
 nav{position:relative;padding-bottom:0.75rem;}
 nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#e2e2e2;}
 
-/* NEW: inner flex container + brand */
-nav .nav-inner{
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-}
+/* inner flex + brand */
+nav .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
 nav .brand{
   text-decoration:none;color:#222;font-weight:800;letter-spacing:.2px;
-  padding:0;border-radius:0; /* don't get the pill background */
+  padding:0;border-radius:0;
 }
-nav .brand:hover{background:transparent;}
+/* brand: NO hover/active effect */
+nav .brand:hover,
+nav .brand.active{color:#222;background:transparent;}
 
-/* links on the right */
+/* links on the right — simple text, lighter gray on hover/active */
 nav ul{display:flex;gap:2rem;list-style:none;margin-left:auto;}
-nav a{padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;font-weight:500;transition:.25s;}
-nav a:hover{background:#939393;}
-nav a.active{background:#383838;color:#fff;}
+nav a{
+  padding:0;                 /* remove pill look */
+  border-radius:0;
+  text-decoration:none;
+  color:#444;
+  font-weight:500;
+  transition:color .15s ease; /* only color change */
+}
+nav a:hover{ color:#888; background:transparent; }
+nav a.active{ color:#888; background:transparent; }
 
-/* Mobile: allow wrapping; center links under brand if needed */
+/* Mobile: wrap links under brand if needed */
 @media (max-width:600px){
   nav .nav-inner{flex-wrap:wrap;}
   nav .brand{margin-bottom:.5rem;}
@@ -43,8 +50,8 @@ section{margin-bottom:4rem;}
   background:#fff;border-radius:12px;padding:1.5rem 1.75rem;
   box-shadow:0 2px 6px rgba(0,0,0,.06);margin-bottom:1.75rem;
 }
-.card h3{color:#7c7c7c;}     /* lighter inside cards */
-.section-title{color:#222;}  /* dark section headings */
+.card h3{color:#7c7c7c;}
+.section-title{color:#222;}
 
 /* center intro text in Projects & Contact */
 #projects .section-title,#projects .section-sub,
@@ -71,11 +78,11 @@ section{margin-bottom:4rem;}
 .btn-outline:hover{background:#eee;}
 
 /* ───────────────────────  Project Cards  ─────────────────────── */
-/* Default: 1 column (phones) */
+/* Phones: 1 column */
 .projects-grid{
   display:grid;
   gap:1.5rem;
-  grid-template-columns:1fr;    /* 1 per row on phone */
+  grid-template-columns:1fr;
   margin-top:2rem;
 }
 /* Desktop: 3 columns */
@@ -86,6 +93,7 @@ section{margin-bottom:4rem;}
 .card-link{display:block;text-decoration:none;color:inherit;}
 .card-link:visited,.card-link:hover,.card-link:active{color:inherit;}
 
+/* KEEP the hover animation on project cards */
 .card-link .project-card{
   background:#fff;border-radius:12px;overflow:hidden;
   box-shadow:0 2px 6px rgba(0,0,0,.05);
