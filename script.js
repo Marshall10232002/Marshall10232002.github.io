@@ -12,9 +12,9 @@ function showSection(id) {
 }
 
 /* 1️⃣  Always start on About */
-showSection('about');
+showSection('projects');
 window.scrollTo(0, 0);        // ⬅️ jump to top
-location.hash = '#about';     // keep URL consistent (optional)
+location.hash = '#projects';     // keep URL consistent (optional)
 
 /* 2️⃣  Handle nav clicks */
 navLinks.forEach(link => link.addEventListener('click', e => {
