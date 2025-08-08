@@ -1,4 +1,5 @@
 // ----- Tab-style page switching -----
+// script.js
 const brand    = document.querySelector('nav .brand');
 const navLinks = document.querySelectorAll('nav a[href^="#"]:not(.brand)');
 const sections = document.querySelectorAll('.page-section');
@@ -6,6 +7,7 @@ const sections = document.querySelectorAll('.page-section');
 function showSection(id) {
   sections.forEach(sec => sec.classList.toggle('active', sec.id === id));
   navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${id}`));
+  if (brand) brand.classList.remove('active'); // never style brand as active
 }
 
 function go(id, push = true) {
