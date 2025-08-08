@@ -1,24 +1,46 @@
 // ----- Tab-style page switching -----
-const navLinks  = document.querySelectorAll('nav a');
-const sections  = document.querySelectorAll('.page-section');
+const brand    = document.querySelector('nav .brand');
+const navLinks = document.querySelectorAll('nav a[href^="#"]:not(.brand)');
+const sections = document.querySelectorAll('.page-section');
 
 function showSection(id) {
-  sections.forEach(sec =>
-    sec.classList.toggle('active', sec.id === id)
-  );
-  navLinks.forEach(link =>
-    link.classList.toggle('active', link.hash === `#${id}`)
-  );
+  sections.forEach(sec => sec.classList.toggle('active', sec.id === id));
+  navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${id}`));
 }
 
-/* 1️⃣  Always start on About */
-showSection('projects');
-window.scrollTo(0, 0);        // ⬅️ jump to top
-location.hash = '#projects';     // keep URL consistent (optional)
+function go(id, push = true) {
+  showSection(id);
+  if (push) history.pushState(null, '', `#${id}`);
+  window.scrollTo(0, 0);
+}
 
-/* 2️⃣  Handle nav clicks */
+// On load: default to Projects unless URL already points to a known section
+document.addEventListener('DOMContentLoaded', () => {
+  const allowed = new Set(['projects', 'about', 'contact']);
+  const current = location.hash ? location.hash.slice(1) : '';
+  const start = allowed.has(current) ? current : 'projects';
+  showSection(start);
+  if (start !== current) history.replaceState(null, '', `#${start}`);
+  window.scrollTo(0, 0);
+});
+
+// Handle nav clicks
 navLinks.forEach(link => link.addEventListener('click', e => {
   e.preventDefault();
-  showSection(link.hash.slice(1));
-  window.scrollTo(0, 0);      // also scroll to top after each click
+  go(link.hash.slice(1));
 }));
+
+// Brand click: go to Projects without giving the brand the "active" pill
+if (brand) {
+  brand.addEventListener('click', e => {
+    e.preventDefault();
+    go('projects');
+  });
+}
+
+// Back/forward support
+window.addEventListener('popstate', () => {
+  const id = (location.hash || '#projects').slice(1);
+  showSection(id);
+  window.scrollTo(0, 0);
+});

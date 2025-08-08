@@ -13,10 +13,29 @@ body{
 header{margin-bottom:2rem;}
 nav{position:relative;padding-bottom:0.75rem;}
 nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#e2e2e2;}
-nav ul{display:flex;justify-content:center;gap:2rem;list-style:none;}
+
+/* NEW: inner flex container + brand */
+nav .nav-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+nav .brand{
+  text-decoration:none;color:#222;font-weight:800;letter-spacing:.2px;
+  padding:0;border-radius:0; /* don't get the pill background */
+}
+nav .brand:hover{background:transparent;}
+
+/* links on the right */
+nav ul{display:flex;gap:2rem;list-style:none;margin-left:auto;}
 nav a{padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;font-weight:500;transition:.25s;}
 nav a:hover{background:#eaeaea;}
 nav a.active{background:#000;color:#fff;}
+
+/* Mobile: allow wrapping; center links under brand if needed */
+@media (max-width:600px){
+  nav .nav-inner{flex-wrap:wrap;}
+  nav .brand{margin-bottom:.5rem;}
+  nav ul{width:100%;justify-content:center;flex-wrap:wrap;gap:1rem;}
+}
 
 /* ────────────────────────  Sections & Cards  ─────────────────── */
 section{margin-bottom:4rem;}
@@ -52,12 +71,18 @@ section{margin-bottom:4rem;}
 .btn-outline:hover{background:#eee;}
 
 /* ───────────────────────  Project Cards  ─────────────────────── */
+/* Default: 1 column (phones) */
 .projects-grid{
   display:grid;
   gap:1.5rem;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:1fr;    /* 1 per row on phone */
   margin-top:2rem;
 }
+/* Desktop: 3 columns */
+@media (min-width:900px){
+  .projects-grid{grid-template-columns:repeat(3,1fr);}
+}
+
 .card-link{display:block;text-decoration:none;color:inherit;}
 .card-link:visited,.card-link:hover,.card-link:active{color:inherit;}
 
