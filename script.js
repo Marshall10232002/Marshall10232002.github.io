@@ -7,7 +7,7 @@ const allowed  = new Set(['projects', 'about', 'contact']);
 function showSection(id) {
   sections.forEach(sec => sec.classList.toggle('active', sec.id === id));
   navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${id}`));
-  if (brand) brand.classList.remove('active'); // brand is always plain text
+  if (brand) brand.classList.remove('active'); // brand always plain
 }
 
 function go(id, push = true) {
@@ -17,7 +17,6 @@ function go(id, push = true) {
   window.scrollTo(0, 0);
 }
 
-// On load: default to Projects unless URL points to a known section
 document.addEventListener('DOMContentLoaded', () => {
   const current = location.hash ? location.hash.slice(1) : '';
   const start = allowed.has(current) ? current : 'projects';
@@ -26,13 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.scrollTo(0, 0);
 });
 
-// Handle tab clicks (Projects / About / Contact)
 navLinks.forEach(link => link.addEventListener('click', e => {
   e.preventDefault();
   go(link.hash.slice(1));
 }));
 
-// Brand click: go to Projects without getting "active"
 if (brand) {
   brand.addEventListener('click', e => {
     e.preventDefault();
@@ -40,7 +37,6 @@ if (brand) {
   });
 }
 
-// Back/forward buttons
 window.addEventListener('popstate', () => {
   const id = (location.hash || '#projects').slice(1);
   go(id, false);

@@ -25,8 +25,8 @@
     <!-- ABOUT -->
     <section id="about" class="page-section">
       <div class="profile">
-        <img src="images/profile.jpeg" alt="Marshall Chang" />
-        <h2>Po-Yu (Marshall) Chang</h2>
+        <img src="images/profile.jpg" alt="Marshall Chang" />
+        <h2>Po Yu (Marshall) Chang</h2>
         <p class="subtitle">
           Mechanical Engineering Student<br />
           National Taiwan University · Class of 2025
@@ -43,7 +43,6 @@
         </p>
       </div>
 
-      <!-- skills + achievements in one row -->
       <div class="grid two-col">
         <div class="card">
           <h3>Technical Skills</h3>
@@ -71,7 +70,7 @@
       </div>
     </section>
 
-    <!-- PROJECTS -->
+    <!-- PROJECTS (default active to avoid FOUC) -->
     <section id="projects" class="page-section active">
       <h2 class="section-title">My Projects</h2>
       <p class="section-sub">
@@ -82,7 +81,7 @@
         <!-- Card 1 -->
         <a href="projects/spherical-robot.html" class="card-link">
           <article class="project-card">
-            <img src="images/spherical_robot.jpeg" alt="Spherical Robot" />
+            <img src="images/spherical_robot.jpg" alt="Spherical Robot" />
             <div class="card-body">
               <h3>Spherical Robot</h3>
               <p class="type">Research Prototype</p>
@@ -151,45 +150,6 @@
   </main>
 
   <footer>© 2025 Marshall Chang</footer>
-
-  <!-- Minimal inline JS to switch pages and default to Projects/top -->
-  <script>
-    const navLinks  = document.querySelectorAll('nav a[href^="#"]');
-    const sections  = document.querySelectorAll('.page-section');
-
-    function showSection(id) {
-      sections.forEach(sec =>
-        sec.classList.toggle('active', sec.id === id)
-      );
-      navLinks.forEach(link =>
-        link.classList.toggle('active', link.hash === `#${id}`)
-      );
-    }
-
-    // Default to Projects and jump to the very top
-    document.addEventListener('DOMContentLoaded', () => {
-      showSection('projects');
-      if (location.hash !== '#projects') {
-        history.replaceState(null, '', '#projects');
-      }
-      window.scrollTo(0, 0);
-    });
-
-    // Handle nav clicks
-    navLinks.forEach(link => link.addEventListener('click', e => {
-      e.preventDefault();
-      const id = link.hash.slice(1);
-      showSection(id);
-      history.pushState(null, '', link.hash);
-      window.scrollTo(0, 0);
-    }));
-
-    // Handle back/forward buttons
-    window.addEventListener('popstate', () => {
-      const id = (location.hash || '#projects').slice(1);
-      showSection(id);
-      window.scrollTo(0, 0);
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
