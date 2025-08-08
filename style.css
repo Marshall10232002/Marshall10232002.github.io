@@ -123,3 +123,27 @@ footer{text-align:center;font-size:.8rem;color:#888;margin-top:2rem;}
 /* ───────────────────────  Page Switching  ────────────────────── */
 .page-section{display:none;}
 .page-section.active{display:block;}
+
+/* ─── Nav divider + spacing ─── */
+nav{
+  position:relative;
+  padding:1rem 0 1.1rem;       /* more vertical space */
+}
+
+nav::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:1px;
+  background:#e3e3e3;          /* subtle divider */
+}
+
+header{
+  margin-bottom:2.2rem;         /* space between divider and page content */
+}
+
+/* a touch tighter on small screens */
+@media (max-width:600px){
+  nav{ padding:.9rem 0 1rem; }
+  header{ margin-bottom:1.6rem; }
+}
