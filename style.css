@@ -27,8 +27,8 @@ nav .brand:hover{background:transparent;}
 /* links on the right */
 nav ul{display:flex;gap:2rem;list-style:none;margin-left:auto;}
 nav a{padding:.5rem 1rem;border-radius:6px;text-decoration:none;color:#444;font-weight:500;transition:.25s;}
-nav a:hover{background:#eaeaea;}
-nav a.active{background:#000;color:#fff;}
+nav a:hover{background:#939393;}
+nav a.active{background:#383838;color:#fff;}
 
 /* Mobile: allow wrapping; center links under brand if needed */
 @media (max-width:600px){
