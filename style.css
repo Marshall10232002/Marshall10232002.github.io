@@ -20,7 +20,7 @@ nav .brand{
   background:transparent;padding:0;border-radius:0;display:inline-block;
 }
 nav .brand:hover,
-nav .brand.active{color:#222;background:transparent;}
+nav .brand.active{color:#4e4e4e;background:transparent;}
 
 /* Tabs: pills with hover + active */
 nav ul{display:flex;gap:2rem;list-style:none;margin-left:auto;}
@@ -38,7 +38,7 @@ nav a:not(.brand):hover{
   color:#222;
 }
 nav a:not(.brand).active{
-  background:#000;
+  background:#4a4a4a;
   color:#fff;
 }
 
