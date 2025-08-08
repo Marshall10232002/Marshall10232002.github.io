@@ -8,23 +8,24 @@ body{
 }
 
 /* ─────────────────────────  Nav Bar  ──────────────────────────── */
-/* ───────────── Nav (brand stays plain, tabs get pill) ───────────── */
+header{margin-bottom:2rem;}
+nav{position:relative;padding-bottom:0.75rem;}
+nav::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:#e2e2e2;}
+
 nav .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
 
-/* Brand: never hover/active styles */
-nav .brand,
-nav .brand:hover,
-nav .brand.active{
-  text-decoration:none;
-  color:#222;
-  font-weight:800;
-  letter-spacing:.2px;
+/* Brand: plain text, never pills */
+nav .brand{
+  text-decoration:none;color:#222;font-weight:800;letter-spacing:.2px;
+  background:transparent;padding:0;border-radius:0;display:inline-block;
 }
+nav .brand:hover,
+nav .brand.active{color:#222;background:transparent;}
 
-/* Tabs: pill hover + active */
+/* Tabs: pills with hover + active */
 nav ul{display:flex;gap:2rem;list-style:none;margin-left:auto;}
 nav a:not(.brand){
-  display:inline-block;          /* <— ensures the pill renders */
+  display:inline-block;
   padding:.5rem 1rem;
   border-radius:6px;
   text-decoration:none;
@@ -37,13 +38,9 @@ nav a:not(.brand):hover{
   color:#222;
 }
 nav a:not(.brand).active{
-  background:#000;               /* <— the box */
+  background:#000;
   color:#fff;
 }
-
-/* (Optional) remove any older rules like:
-   nav a { padding:0; ... } or nav a.active { background:transparent; }
-   if they still exist below this block. */
 
 /* Mobile wrap */
 @media (max-width:600px){
