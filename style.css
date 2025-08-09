@@ -185,7 +185,10 @@ header{
   header{ margin-bottom:1.6rem; }
 }
 .project-card .btn {
-  margin-top: auto;
+  margin-top: auto;          /* anchor to bottom */
+  align-self: flex-start;    /* prevent full-width stretch in flex container */
+  width: auto;               /* keep natural button width */
+  max-width: 100%;           /* avoid overflow on small screens */
 }
 
 .project-card .card-body > *:last-child {
