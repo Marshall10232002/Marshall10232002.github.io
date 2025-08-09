@@ -138,6 +138,17 @@ section{margin-bottom:4rem;}
   align-items: stretch; /* make cards equal height in the row */
 }
 
+/* Ensure grid items and cards stretch full height so the button can pin to bottom */
+.projects-grid > .card-link {
+  display: flex;
+  height: 100%;
+}
+.projects-grid > .card-link > .project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* ───────────────────────────  Contact  ───────────────────────── */
 .contact-card{display:flex;flex-direction:column;gap:1.25rem;align-items:flex-start;}
 .contact-row{display:flex;gap:.75rem;align-items:flex-start;}
