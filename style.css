@@ -123,7 +123,6 @@ section{margin-bottom:4rem;}
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 400px; /* Adjust as needed */
 }
 
 .project-card img {
@@ -175,5 +174,9 @@ header{
   header{ margin-bottom:1.6rem; }
 }
 .project-card .btn {
+  margin-top: auto;
+}
+
+.project-card .card-body > *:last-child {
   margin-top: auto;
 }
