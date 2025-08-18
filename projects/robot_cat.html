@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backflip Robot Cat | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page-specific, light styles (works with your existing style.css) */
+    :root { --maxw: 980px; }
+    main { max-width: var(--maxw); margin: auto; padding: 2rem 1rem 2rem; }
+    .hero { text-align:center; margin-bottom: 1.25rem; }
+    .subtitle { color: #666; margin-top: .4rem; }
+
+    .pill { display:inline-block; background:#efefef; color:#333; padding:.35rem .75rem; border-radius:999px; font-weight:600; font-size:.9rem; }
+
+    .cols { display:grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items:start; }
+    .card { border:1px solid #e5e5e5; border-radius:12px; padding:1rem 1.25rem; background:#fff; }
+    .card h3 { display:flex; align-items:center; gap:.5rem; margin:.25rem 0 .5rem; }
+    .card ul { margin:.25rem 0 0 1rem; }
+
+    .section { margin-top: 2rem; }
+    .section.results { margin-bottom: .25rem; }
+    .section > .block + .block { margin-top: 1rem; }
+    .section h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 .6rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
+    .block h3 { font-size:1rem; color:#222; margin:0 0 .6rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
+    .block { border:1px solid #e8e8e8; border-radius:14px; background:#fff; padding:1.25rem; box-shadow:0 1px 2px rgba(0,0,0,.03); }
+
+    .figure { display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap; }
+    .figure img { width: min(480px, 100%); border-radius:12px; background:#f7f7f7; aspect-ratio: 4/3; object-fit: cover; }
+    .figure .notes { flex:1 1 260px; }
+    .figure .notes ul, .block ul { margin: .5rem 0 0; padding-left: 1.1rem; }
+
+    .video { position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden; }
+    .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    .grid-vid { display:grid; grid-template-columns: 1fr; gap:1rem; }
+    @media (min-width: 720px){ .grid-vid { grid-template-columns: 1fr 1fr; } }
+
+    /* Section-specific layout tweaks */
+    .section.how .figure {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 720px){
+      .section.how .figure { grid-template-columns: 1fr; }
+    }
+    /* HOW: two side-by-side blocks that stack on phone */
+    .section.how .two-col {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+    @media (max-width: 720px){
+      .section.how .two-col { grid-template-columns: 1fr; }
+    }
+    .section.how .two-col > .block { height: 100%; }
+
+    .section.how .block img { width: 100%; height: auto; display: block; border-radius: 12px; }
+
+    /* Results: description → video → award image (stacked) */
+    .section.results .figure {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .section.results .notes > * { margin-bottom: 1rem; }
+    .section.results .notes > *:last-child { margin-bottom: 0; }
+
+    .back { display:inline-block; margin-top:.5rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>BACKFLIP ROBOT CAT</h1>
+      <div class="subtitle">rapid energy‑release mechanism</div>
+    </header>
+
+
+    <!-- WHAT -->
+    <section class="section">
+      <div class="block">
+        <img src="../images/robot_cat_overview.png" alt="Robot Cat Overview" style="width:100%; max-width:1000px; border-radius:12px; margin:0 0 1rem 0;" />
+      </div>
+      <div class="block">
+        <h2>WHAT?</h2>
+        <ul>
+          <li>This project was inspired by a well‑known meme in Taiwan: “Do you want to come over to see my cat do a backflip?”</li>
+          <li>We joined a competition where we had to build the entire robot cat in just 24 hours and keep the cost under 30 USD. To meet these constraints, we designed a low‑cost, quick energy‑release mechanism powered by two 1.5V batteries and a 3V motor.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- HOW -->
+    <section class="section how">
+      <div class="two-col">
+        <div class="block">
+          <h2>HOW?</h2>
+          <!-- Placeholder image: add your mechanism image later -->
+          <img src="../images/robot_cat_mechanism_placeholder.png" alt="Mechanism placeholder" />
+        </div>
+        <div class="block">
+          <h2>MECHANISM VIDEO</h2>
+          <div class="video">
+            <iframe src="https://www.youtube.com/embed/bVk0B_5wn6I" title="Mechanism explanation video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- RESULTS -->
+    <section class="section results">
+      <div class="block">
+        <h2>RESULTS</h2>
+        <div class="figure">
+          <div class="notes">
+            <ul>
+              <li>We successfully built the robot cat to perform a backflip, demonstrating a rapid energy-release mechanism within a low-cost design.</li>
+              <li>We won the Best Popularity Award, proving that building something fun and enjoyable can also earn appreciation from others.</li>
+            </ul>
+            <div class="video">
+              <iframe src="https://www.youtube.com/embed/3rqqYrlvkOU" title="Backflip result video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <img src="../images/robot_cat_award.jpeg" alt="Robot Cat Award" style="width:100%; max-width:480px; border-radius:12px;" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>
