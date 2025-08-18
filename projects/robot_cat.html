@@ -7,41 +7,45 @@
   <link rel="stylesheet" href="../style.css" />
   <style>
     /* Page-specific, light styles (works with your existing style.css) */
-    :root { --maxw: 980px; }
-    main { max-width: var(--maxw); margin: auto; padding: 2rem 1rem 2rem; }
-    .hero { text-align:center; margin-bottom: 1.25rem; }
-    .subtitle { color: #666; margin-top: .4rem; }
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;  /* uniform spacing between sections */
+      --space-block: 1rem;    /* uniform spacing between blocks inside sections */
+      --radius: 12px;
+    }
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align:center; margin-bottom: var(--space-block); }
 
     .pill { display:inline-block; background:#efefef; color:#333; padding:.35rem .75rem; border-radius:999px; font-weight:600; font-size:.9rem; }
 
-    .cols { display:grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items:start; }
-    .card { border:1px solid #e5e5e5; border-radius:12px; padding:1rem 1.25rem; background:#fff; }
+    .cols { display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-block); align-items:start; }
+    .card { border:1px solid #e5e5e5; border-radius: var(--radius); padding: var(--space-block); background:#fff; }
     .card h3 { display:flex; align-items:center; gap:.5rem; margin:.25rem 0 .5rem; }
-    .card ul { margin:.25rem 0 0 1rem; }
+    .card ul { margin:.25rem 0 0 0.5rem; }
 
-    .section { margin-top: 2rem; }
-    .section.results { margin-bottom: .25rem; }
-    .section > .block + .block { margin-top: 1rem; }
-    .section h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 .6rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
-    .block h3 { font-size:1rem; color:#222; margin:0 0 .6rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
-    .block { border:1px solid #e8e8e8; border-radius:14px; background:#fff; padding:1.25rem; box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+    .section > .block + .block { margin-top: var(--space-block); }
+    .section h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
+    .block h3 { font-size:1rem; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
+    .block { border:1px solid #e8e8e8; border-radius: var(--radius); background:#fff; padding: calc(var(--space-block) ); box-shadow:0 1px 2px rgba(0,0,0,.03); }
 
-    .figure { display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap; }
-    .figure img { width: min(480px, 100%); border-radius:12px; background:#f7f7f7; aspect-ratio: 4/3; object-fit: cover; }
+    .figure { display:flex; gap: var(--space-outer); align-items:flex-start; flex-wrap:wrap; }
+    .figure img { width: min(480px, 100%); border-radius: var(--radius); background:#f7f7f7; aspect-ratio: 4/3; object-fit: cover; }
     .figure .notes { flex:1 1 260px; }
     .figure .notes ul, .block ul { margin: .5rem 0 0; padding-left: 1.1rem; }
 
-    .video { position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden; }
+    .video { position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius: var(--radius); overflow:hidden; }
     .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
 
-    .grid-vid { display:grid; grid-template-columns: 1fr; gap:1rem; }
+    .grid-vid { display:grid; grid-template-columns: 1fr; gap: var(--space-block); }
     @media (min-width: 720px){ .grid-vid { grid-template-columns: 1fr 1fr; } }
 
     /* Section-specific layout tweaks */
     .section.how .figure {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      gap: var(--space-block);
       align-items: start;
     }
     @media (max-width: 720px){
@@ -51,7 +55,7 @@
     .section.how .two-col {
       display: grid;
       grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap: 1.25rem;
+      gap: var(--space-block);
       align-items: stretch;
     }
     @media (max-width: 720px){
@@ -65,12 +69,20 @@
     .section.results .figure {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: var(--space-block);
     }
-    .section.results .notes > * { margin-bottom: 1rem; }
+    .section.results .notes > * { margin-bottom: var(--space-block); }
     .section.results .notes > *:last-child { margin-bottom: 0; }
 
-    .back { display:inline-block; margin-top:.5rem; }
+    .back { display:inline-block; margin-top: var(--space-block); }
+
+    .overview-img {
+      width: 100%;
+      max-width: 1000px;
+      border-radius: var(--radius);
+      margin-bottom: var(--space-block);
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -85,10 +97,10 @@
     <!-- WHAT -->
     <section class="section">
       <div class="block">
-        <img src="../images/robot_cat_overview.png" alt="Robot Cat Overview" style="width:100%; max-width:1000px; border-radius:12px; margin:0 0 1rem 0;" />
+        <img class="overview-img" src="../images/robot_cat_overview.png" alt="Robot Cat Overview" />
       </div>
       <div class="block">
-        <h2>WHAT?</h2>
+        <h2>OVERVIEW</h2>
         <ul>
           <li>This project was inspired by a well‑known meme in Taiwan: “Do you want to come over to see my cat do a backflip?”</li>
           <li>We joined a competition where we had to build the entire robot cat in just 24 hours and keep the cost under 30 USD. To meet these constraints, we designed a low‑cost, quick energy‑release mechanism powered by two 1.5V batteries and a 3V motor.</li>
@@ -100,7 +112,7 @@
     <section class="section how">
       <div class="two-col">
         <div class="block">
-          <h2>HOW?</h2>
+          <h2>HOW IT WORKS</h2>
           <!-- Placeholder image: add your mechanism image later -->
           <img src="../images/robot_cat_mechanism_placeholder.png" alt="Mechanism placeholder" />
         </div>
@@ -117,7 +129,7 @@
     <!-- RESULTS -->
     <section class="section results">
       <div class="block">
-        <h2>RESULTS</h2>
+        <h2>RESULTS &amp; RECOGNITION</h2>
         <div class="figure">
           <div class="notes">
             <ul>
