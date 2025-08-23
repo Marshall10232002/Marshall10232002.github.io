@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D‑Printed AFM | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page‑specific, light styles to match wardrobe page */
+    :root{
+      --maxw: 980px;
+      --space-section: 1rem;
+      --space-block: 1rem;
+      --radius: 12px;
+    }
+    main{max-width:var(--maxw);margin:0 auto;padding:var(--space-outer) 1rem var(--space-outer);} /* --space-outer comes from your global CSS */
+    .hero{text-align:center;margin-bottom:var(--space-block);}    
+
+    .section{margin:0;}
+    .section+.section{margin-top:var(--space-section);}    
+    .section> .block + .block{margin-top:var(--space-block);}  
+
+    .section h2{font-size:1.15rem;letter-spacing:.08em;color:#222;margin:0 0 1rem;padding-bottom:.4rem;border-bottom:2px solid #bbb;}
+    .block{border:1px solid #e8e8e8;border-radius:var(--radius);background:#fff;padding:calc(var(--space-block));box-shadow:0 1px 2px rgba(0,0,0,.03);} 
+    .block h3{font-size:1rem;color:#222;margin:0 0 .6rem;padding-bottom:.35rem;border-bottom:2px solid #bbb;}
+
+    /* Responsive two‑column grid that stacks on phones */
+    .two-col{display:grid;grid-template-columns:1fr;gap:var(--space-block);align-items:start;}
+    @media (min-width:720px){.two-col{grid-template-columns:1fr 1fr;}}
+    .grid-2{display:grid;grid-template-columns:1fr;gap:var(--space-block);align-items:start;}
+    @media (min-width:720px){.grid-2{grid-template-columns:1fr 1fr;}}
+
+    /* Masonry (Pinterest-style) layout: 2 columns on desktop, 1 on phone */
+    .masonry{
+      column-count: 2;
+      column-gap: var(--space-block);
+      column-fill: balance;
+    }
+    @media (max-width:719px){
+      .masonry{ column-count: 1; }
+    }
+    .masonry .block{
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      -moz-column-break-inside: avoid;
+      display: block;
+      width: 100%;
+      margin: 0 0 var(--space-block);
+    }
+
+    /* Force a card to start in the next column (desktop only) */
+    @media (min-width:720px){
+      .masonry .push-right{
+        break-before: column;
+        -webkit-column-break-before: always;
+        -moz-column-break-before: always;
+      }
+    }
+
+    /* Image helpers for quick poster copy‑paste */
+    .overview-img,.poster-img,.top-img{width:100%;height:auto;display:block;border-radius:var(--radius);background:#fff;object-fit:contain;}
+    .top-img{margin-bottom:.6rem;}
+
+    /* Reduce the height of the tall Scanning image to minimize bottom gap between columns */
+    .poster-img--scan{
+      max-height: 520px; /* tweak if you want tighter balance */
+    }
+    @media (max-width:719px){
+      .poster-img--scan{ max-height: none; } /* no cap on phone */
+    }
+
+    .back{display:inline-block;margin-top:var(--space-block);}  
+
+    /* Keep list bullets inside the card and aligned */
+    .block ul, .block ol { margin: .5rem 0 0; padding-left: 1.2rem; list-style-position: outside; }
+
+    /* Layout for WHAT IS AFM: text left, image right on desktop */
+    .afm-what { display:grid; grid-template-columns: 1fr; gap: .75rem; align-items:start; }
+    @media (min-width:720px){ .afm-what { grid-template-columns: 1fr minmax(160px, 220px); } }
+    .afm-principle { width:100%; height:auto; display:block; border-radius: var(--radius); max-width:220px; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>3D‑PRINTED AFM</h1>
+    </header>
+
+
+    <!-- INTRO + WHAT IS AFM (with principle image above text) -->
+    <section class="section">
+      <div class="block two-col">
+        <div>
+          <h2>INTRODUCTION</h2>
+          <ul>
+            <li>3D printing enables fast iteration of custom components. We designed and assembled a compact AFM (Atomic Force Microscope) to evaluate the feasibility of low‑cost fabrication for precision instruments.</li>
+            <li>Validation used a commercial calibration grating (TGQ1) and tape‑exfoliated graphene.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>WHAT IS AFM?</h2>
+          <div class="afm-what">
+            <div>
+              <ul>
+                <li>A sharp cantilever tip scans the surface while a laser and position sensor track deflection.</li>
+                <li>Produces height maps and cross‑section profiles from micro‑ to nanoscale.</li>
+              </ul>
+            </div>
+            <img class="afm-principle" src="../images/afm/afm_principle.png" alt="AFM principle: laser, cantilever, PSD" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AFM DESIGNS (2‑col on desktop, 1‑col on phone) -->
+    <section class="section">
+      <div class="grid-2">
+        <div class="block">
+          <h2>FIRST DESIGN</h2>
+          <!-- Paste your V1 image from poster -->
+          <img class="poster-img" src="../images/afm/afm_design_v1.png" alt="AFM design v1" />
+        </div>
+        <div class="block">
+          <h2>Second(Final) Design</h2>
+          <!-- Paste your V2 image from poster -->
+          <img class="poster-img" src="../images/afm/afm_design_v2.png" alt="AFM design v2" />
+        </div>
+      </div>
+    </section>
+
+    <!-- AFM SETUP (two images side-by-side on desktop, stacked on phone) -->
+    <section class="section">
+      <div class="block">
+        <h2>AFM SETUP</h2>
+        <div class="two-col">
+          <!-- Left: schematic. Replace the src with your image path or paste over this tag -->
+          <img class="top-img" src="../images/afm/afm_setup_schematic.png" alt="AFM setup schematic: laser, mirrors, PSD, tip" />
+          <!-- Right: bench photo. Replace the src with your image path or paste over this tag -->
+          <img class="top-img" src="../images/afm/afm_setup_photo.png" alt="AFM setup on optical table with microscope and piezo stage" />
+        </div>
+      </div>
+    </section>
+
+    <!-- POSTER PANELS as 2‑column cards; Summary & Recognition included here -->
+    <section class="section">
+      <div class="masonry">
+        <div class="block">
+          <h2>TAPE METHOD OF GRAPHENE</h2>
+          <img class="poster-img" src="../images/afm/afm_tape_method.png" alt="Tape method panel" />
+        </div>
+        <div class="block">
+          <h2>RAMAN SPECTROSCOPY</h2>
+          <img class="poster-img" src="../images/afm/afm_raman.png" alt="Raman spectroscopy panel" />
+        </div>
+        <div class="block push-right">
+          <h2>SCANNING SAMPLES</h2>
+          <img class="poster-img poster-img--scan" src="../images/afm/afm_scanning_samples.png" alt="Scanning samples panel" />
+        </div>
+        <div class="block">
+          <h2>SUMMARY &amp; RECOGNITION</h2>
+          <ul>
+            <li>Imaged the TGQ1 calibration grating and tape‑exfoliated graphene using a 3D‑printed AFM.</li>
+            <li>TGQ1 scans reproduce the expected pattern; graphene scans show identifiable layered regions.</li>
+            <li>These results indicate that 3D‑printed structural parts can support nanoscale AFM measurements.</li>
+            <li><strong>Bronze Award</strong>, Poster Competition.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFERENCES at very bottom -->
+    <section class="section">
+      <div class="block">
+        <h2>REFERENCES</h2>
+        <ol>
+          <li>Atomic force microscopy — Wikipedia. <em>Overview of AFM principles.</em></li>
+          <li>Graf, D. et al., <em>Nano Lett.</em> 2007, 7, 242 — Graphene Raman signatures.</li>
+        </ol>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>

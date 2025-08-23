@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart wardrobe | Marshall Chang</title>
+  <title>Smart Wardrobe | Marshall Chang</title>
   <link rel="stylesheet" href="../style.css" />
   <style>
+    .spacious-list li { 
+      margin-bottom: 0.5rem; 
+      line-height: 1.5; 
+    }
     /* Page-specific, light styles (works with your existing style.css) */
     :root {
       --maxw: 980px;
@@ -16,73 +20,55 @@
     main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
     .hero { text-align:center; margin-bottom: var(--space-block); }
 
-    .pill { display:inline-block; background:#efefef; color:#333; padding:.35rem .75rem; border-radius:999px; font-weight:600; font-size:.9rem; }
-
-    .cols { display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-block); align-items:start; }
-    .card { border:1px solid #e5e5e5; border-radius: var(--radius); padding: var(--space-block); background:#fff; }
-    .card h3 { display:flex; align-items:center; gap:.5rem; margin:.25rem 0 .5rem; }
-    .card ul { margin:.25rem 0 0 0.5rem; }
-
     .section { margin: 0; }
     .section + .section { margin-top: var(--space-section); }
     .section > .block + .block { margin-top: var(--space-block); }
     .section h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
     .block h3 { font-size:1rem; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
-    .block { border:1px solid #e8e8e8; border-radius: var(--radius); background:#fff; padding: calc(var(--space-block) ); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .block { border:1px solid #e8e8e8; border-radius: var(--radius); background:#fff; padding: calc(var(--space-block)); box-shadow:0 1px 2px rgba(0,0,0,.03); }
 
-    .figure { display:flex; gap: var(--space-outer); align-items:flex-start; flex-wrap:wrap; }
+    .figure { display:flex; gap: var(--space-outer); align-items:flex-start; flex-wrap:wrap; gap: 1.5rem; }
     .figure img { width: min(480px, 100%); border-radius: var(--radius); background:#f7f7f7; aspect-ratio: 4/3; object-fit: cover; }
     .figure .notes { flex:1 1 260px; }
     .figure .notes ul, .block ul { margin: .5rem 0 0; padding-left: 1.1rem; }
 
-    .video { position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius: var(--radius); overflow:hidden; }
-    .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    .overview-img { width:100%; max-width:1000px; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; }
 
-    .grid-vid { display:grid; grid-template-columns: 1fr; gap: var(--space-block); }
-    @media (min-width: 720px){ .grid-vid { grid-template-columns: 1fr 1fr; } }
+    /* Simple two-column grid that stacks on small screens */
+    .two-col { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--space-block); align-items:start; }
+    @media (max-width: 720px){ .two-col { grid-template-columns: 1fr; } }
 
-    /* Section-specific layout tweaks */
-    .section.how .figure {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-block);
-      align-items: start;
-    }
-    @media (max-width: 720px){
-      .section.how .figure { grid-template-columns: 1fr; }
-    }
-    /* HOW: two side-by-side blocks that stack on phone */
-    .section.how .two-col {
-      display: grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap: var(--space-block);
-      align-items: stretch;
-    }
-    @media (max-width: 720px){
-      .section.how .two-col { grid-template-columns: 1fr; }
-    }
-    .section.how .two-col > .block { height: 100%; }
-
-    .section.how .block img { width: 100%; height: auto; display: block; border-radius: 12px; }
-
-    /* Results: description → video → award image (stacked) */
-    .section.results .figure {
+    /* Two photos side-by-side on large screens, balanced and with consistent aspect ratio */
+    .grid-2 {
       display: grid;
       grid-template-columns: 1fr;
       gap: var(--space-block);
+      align-items: stretch;
     }
-    .section.results .notes > * { margin-bottom: var(--space-block); }
-    .section.results .notes > *:last-child { margin-bottom: 0; }
+    @media (min-width: 720px) {
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
 
-    .back { display:inline-block; margin-top: var(--space-block); }
-
-    .overview-img {
+    .grid-2 img {
       width: 100%;
-      max-width: 1000px;
+      height: auto;
+      object-fit: contain;
       border-radius: var(--radius);
-      margin-bottom: var(--space-block);
+      background: #fff;
+      aspect-ratio: 4/3;
       display: block;
     }
+    .recognition-img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius: var(--radius);
+      background:#fff;
+    }
+
+    .back { display:inline-block; margin-top: var(--space-block); }
   </style>
 </head>
 <body>
@@ -90,58 +76,88 @@
     <!-- HERO -->
     <header class="hero">
       <h1>SMART WARDROBE</h1>
-      <div class="subtitle">rapid energy‑release mechanism</div>
+      <div class="subtitle">product design exploration</div>
     </header>
 
-
-    <!-- WHAT -->
+    <!-- OVERVIEW IMAGE + OVERVIEW TEXT -->
     <section class="section">
       <div class="block">
-        <img class="overview-img" src="../images/robot_cat_overview.png" alt="Robot Cat Overview" />
+        <img class="overview-img" src="../images/wardrobe/wardrobe_overview.png" alt="Smart Wardrobe overview" />
       </div>
       <div class="block">
         <h2>OVERVIEW</h2>
         <ul>
-          <li>This project was inspired by a well‑known meme in Taiwan: “Do you want to come over to see my cat do a backflip?”</li>
-          <li>Joined a competition where we had to build the entire robot cat in just 24 hours and keep the cost under 30 USD. To meet these constraints, we designed a low‑cost, quick energy‑release mechanism powered by two 1.5V batteries and a 3V motor.</li>
+          <li>Motivated by the challenge of locating items without creating closet clutter, this project explores a smart wardrobe concept.</li>
+          <li>Defined the industrial design and core mechanism architecture.</li>
+          <li>Integrated DFM/DFA into the mechanical design to ensure manufacturability, ease of assembly, and a smoother user experience.</li>
+          <li>Implemented a camera‑equipped rail with MediaPipe‑based vision to identify garments, plus a web app to browse the catalog and compose OOTD looks.</li>
         </ul>
       </div>
     </section>
 
-    <!-- HOW -->
-    <section class="section how">
-      <div class="two-col">
-        <div class="block">
-          <h2>HOW IT WORKS</h2>
-          <!-- Placeholder image: add your mechanism image later -->
-          <img src="../images/robot_cat_mechanism_placeholder.png" alt="Mechanism placeholder" />
-        </div>
-        <div class="block">
-          <h2>MECHANISM VIDEO</h2>
-          <div class="video">
-            <iframe src="https://www.youtube.com/embed/bVk0B_5wn6I" title="Mechanism explanation video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <!-- HOW IT WORKS -->
+    <section class="section">
+      <div class="block">
+        <h2>HOW IT WORKS</h2>
+        <div class="figure">
+          <img src="../images/wardrobe/wardrobe_explain.png" alt="Mechanism placeholder" />
+          <div class="notes">
+            <ul>
+              <li>A camera captures garment images when items are placed on the rail; the vision pipeline extracts features and assigns an ID.</li>
+              <li>A pressure sensor integrated with the rail provides a position index, allowing the system to localize each garment.</li>
+              <li>The mapping between physical position and the digital catalog powers search and a simple web interface for browsing and outfit planning.</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-
-    <!-- RESULTS -->
-    <section class="section results">
+    <!-- FIRST PROTOTYPE -->
+    <section class="section">
       <div class="block">
-        <h2>RESULTS &amp; RECOGNITION</h2>
+        <h2>FIRST PROTOTYPE</h2>
         <div class="figure">
+          <img src="../images/wardrobe/wardrobe_proto.png" alt="First prototype photo" />
           <div class="notes">
             <ul>
-              <li>Successfully built the robot cat to perform a backflip, demonstrating a rapid energy-release mechanism within a low-cost design.</li>
-              <li>Won the Best Popularity Award, proving that building something fun and enjoyable can also earn appreciation from others.</li>
+                <li>PVC is opaque, making indicator LEDs difficult to see.</li>
+                <li>Cutting slots is challenging and must be repeated for each one.</li>
+                <li>Assembly of the internal mechanism must be done individually.</li>
             </ul>
-            <div class="video">
-              <iframe src="https://www.youtube.com/embed/3rqqYrlvkOU" title="Backflip result video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <img src="../images/robot_cat_award.jpeg" alt="Robot Cat Award" style="width:100%; max-width:480px; border-radius:12px;" />
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- FINAL DESIGN -->
+    <section class="section">
+      <div class="block">
+        <h2>FINAL DESIGN</h2>
+        <div class="grid-2">
+          <img src="../images/wardrobe/wardrobe_final_1.png" alt="Final build, view 1" />
+          <img src="../images/wardrobe/wardrobe_final_2.png" alt="Final build, view 2" />
+        </div>
+        <ul style="margin-top: var(--space-block);">
+          <li>Replaced single indicator LEDs with an LED strip for simpler manufacturing and control.</li>
+          <li>Switched from PVC to acrylic to improve LED visibility.</li>
+          <li>Integrated a PVC cable duct (PVC wire channel), allowing the entire mechanism to slide in as one unit for faster assembly and easier maintenance.</li>
+          <li>Reinforced the acrylic using the PVC cable duct to increase structural strength.</li>
+          <li>Reduced drilling to a single hole for the 3D‑printed slot to transmit force to the sensor.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- RECOGNITION / AWARD -->
+    <section class="section">
+      <div class="block">
+        <h2>RECOGNITION</h2>
+        <div class="notes">
+          <ul>
+            <li>Awarded the <strong>Best Wanted Product</strong> at the Google Taiwan Hardware Product Sprint.</li>
+            <li>Collaborated with teammates from diverse backgrounds to prototype and present the concept.</li>
+          </ul>
+        </div>
+        <img class="recognition-img" src="../images/wardrobe/wardrobe_award.png" alt="Best Wanted Product award" />
       </div>
     </section>
 
