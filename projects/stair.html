@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Climbing Robot | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page-specific styles (keeps your global palette/type from style.css) */
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;   /* spacing between sections */
+      --space-block: 1.25rem;     /* spacing inside blocks */
+      --radius: 12px;
+      --rule: #bbb;
+      --soft: #e8e8e8;
+    }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align: center; margin-bottom: var(--space-block); }
+    .subtitle { opacity: .8; font-size: .95rem; }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+
+    /* One outer card per section */
+    .block { border:1px solid var(--soft); border-radius: var(--radius); background:#fff; padding: var(--space-block); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .block h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid var(--rule); }
+    .block h2 + *{ margin-top:.25rem; }
+
+    .spacious-list { margin:0; padding-left:1.1rem; }
+    .spacious-list li { margin-bottom:.65rem; line-height:1.6; }
+    .compact-list li { margin-bottom:.4rem; line-height:1.4; }
+
+    /* Media helpers */
+    .overview-img { width:100%; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; object-fit:cover; }
+
+    /* Two-column layout INSIDE a single card */
+    .two-col { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1.5rem; align-items:stretch; }
+    .two-col > .block{ height:100%; display:flex; flex-direction:column; }
+    @media (max-width: 720px){ .two-col { grid-template-columns:1fr; } }
+
+    /* Responsive 16:9 video */
+    .video{ position:relative; width:100%; border-radius: var(--radius); overflow:hidden; }
+    .video::before{ content:""; display:block; padding-top:56.25%; }
+    .video > iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; }
+    .video.tall::before{ padding-top:65%; }
+
+    .back { display:inline-block; margin-top: var(--space-block); }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>Stair‑Climbing Robot</h1>
+      <div class="subtitle">autonomous following • stair climbing</div>
+    </header>
+
+    <!-- OVERVIEW (no images) -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <ul class="spacious-list">
+          <li>Conceived the project to address the everyday challenge of carrying heavy loads upstairs.</li>
+          <li>Developed a person-following function that allows the robot to accompany and assist users.</li>
+          <li>Created a stair-climbing mechanism that expands robotic mobility beyond flat ground.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- DESIGN (single image) -->
+    <section class="section">
+      <div class="block">
+        <h2>DESIGN</h2>
+        <img class="overview-img" src="../images/stair/design_overview.png" alt="Overall design render" />
+      </div>
+    </section>
+
+    <!-- MECHANISM (card) | FOLLOWING VIDEO (card) side-by-side -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>MECHANISM DETAILS</h2>
+          <img class="overview-img" src="../images/stair/mechanism.png" alt="Mechanism design" />
+        </div>
+        <div class="block">
+          <h2>PERSON-FOLLOWING DEMO</h2>
+          <div class="video">
+            <iframe src="https://www.youtube.com/embed/8E-kyqwOJFg" title="Robot following demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIMB EXPLANATION (card) | CLIMB VIDEO (card) side-by-side -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>STAIR-CLIMBING EXPLANATION</h2>
+          <img class="overview-img" src="../images/stair/stair_explain.png" alt="Stair climbing explanation" />
+          <ul class="spacious-list compact-list" style="margin-top:.5rem; font-size:.92rem; line-height:1.4;">
+            <li>Decomposed the stair-climbing motion into five frames and determined the end-point coordinates relative to the back chassis.</li>
+            <li>Applied inverse kinematics and Denavit–Hartenberg parameters to compute joint angles at each frame.</li>
+            <li>Used cubic polynomials to generate smooth trajectories connecting the joint angles across frames.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h2>STAIR-CLIMBING VIDEO</h2>
+          <div class="video tall">
+            <iframe src="https://www.youtube.com/embed/1lo-rHRj5FE" title="Stair climbing demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE WORK (bullets only, no inner card) -->
+    <section class="section">
+      <div class="block">
+        <h2>FUTURE WORK</h2>
+        <ul class="spacious-list">
+          <li>Detect and adapt to varied step heights and terrains.</li>
+          <li>Upgrade to higher power‑density actuation while reducing mass.</li>
+          <li>Integrate millimeter‑wave positioning for robust person localization.</li>
+        </ul>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>

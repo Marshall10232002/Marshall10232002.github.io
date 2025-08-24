@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EOG Eye-Control Interface | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page-specific styles (reuse palette/type from style.css) */
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;
+      --space-block: 1.25rem;
+      --radius: 12px;
+      --rule: #bbb;
+      --soft: #e8e8e8;
+      --space-outer: 1.5rem;
+    }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align: center; margin-bottom: var(--space-block); }
+    .subtitle { opacity: .8; font-size: .95rem; }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+
+    /* One outer card per section */
+    .block { border:1px solid var(--soft); border-radius: var(--radius); background:#fff; padding: var(--space-block); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .block h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid var(--rule); }
+    .block h2 + *{ margin-top:.25rem; }
+
+    .spacious-list { margin:0; padding-left:1.1rem; }
+    .spacious-list li { margin-bottom:.65rem; line-height:1.6; }
+    .compact-list { margin:0; padding-left:1.1rem; }
+    .compact-list li { margin-bottom:.4rem; line-height:1.45; }
+
+    /* Media helpers */
+    .overview-img { width:100%; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; object-fit:cover; }
+    .video{ position:relative; width:100%; border-radius: var(--radius); overflow:hidden; }
+    .video::before{ content:""; display:block; padding-top:56.25%; }
+    .video > iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; }
+    .video.tall::before{ padding-top:65%; }
+
+    /* Simple responsive two-column helper */
+    .two-col { display:grid; gap: 1rem; }
+    @media (min-width: 760px){ .two-col { grid-template-columns: 1fr 1fr; } }
+
+    .back { display:inline-block; margin-top: var(--space-block); }
+
+    /* Foldable references */
+    details.ref-list { margin-top: 1.25rem; }
+    details.ref-list summary { cursor: pointer; font-weight: 600; letter-spacing: .04em; }
+    details.ref-list[open] summary { margin-bottom: .5rem; }
+    details.ref-list ol.compact-list { padding-left: 1.25rem; }
+    details.ref-list ol.compact-list li { margin-bottom: .8rem; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>EOG Eye-Control Interface</h1>
+      <div class="subtitle">electrooculography input • low-cost accessibility</div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <ul class="spacious-list">
+          <li><strong>Motivation.</strong> Support older adults and users with mobility limitations by enabling computer/VR interaction using eye movement alone.</li>
+          <li><strong>Solution.</strong> An electrooculography (EOG) front‑end (INA818 instrumentation amplifier, 60&nbsp;Hz notch, high/low‑pass filters, level shifting) feeding an Arduino Leonardo (ATmega32u4) that maps left/right eye movements to keyboard input for a VR or desktop interface.</li>
+          <li><strong>Outcome.</strong> Breadboard used for the demo; initial PCB (Rev A) fabricated and evaluated; stable left/right detection; controls camera yaw in a VR scene.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section">
+      <div class="block">
+        <h2>HOW IT WORKS</h2>
+        <div class="two-col">
+          <div>
+            <img class="overview-img" src="../images/eog/how_pipeline.png" alt="EOG signal pipeline diagram" />
+          </div>
+          <div>
+            <ul class="compact-list">
+              <li><strong>Electrodes.</strong> Two measurement electrodes at the temples plus a reference electrode capture corneo‑retinal potential changes during saccades.</li>
+              <li><strong>Analog front‑end.</strong> INA818 gain stage → UAF42 60&nbsp;Hz notch → high/low‑pass conditioning → offset to ~2.5&nbsp;V → LM358 second‑stage gain → TL071 adder to center the signal at mid‑rail (0–5&nbsp;V output).</li>
+              <li><strong>Sampling & logic.</strong> Arduino ADC samples the channel; dual thresholds detect <em>left</em>/<em>right</em> looks. First detection presses <kbd>a</kbd> or <kbd>d</kbd>; a second detection releases the key to stop rotation.</li>
+              <li><strong>Interface.</strong> Unity scene (or desktop app) responds to keyboard events for camera yaw; a hardware toggle switch enables/disables input safely.</li>
+              <li><em>IC legend:</em> SK1 = LM358; SK2 = TL071; SK3 = UAF42.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROTOTYPE (BREADBOARD) -->
+    <section class="section">
+      <div class="block">
+        <h2>PROTOTYPE (BREADBOARD)</h2>
+        <div class="two-col">
+          <div>
+            <img class="overview-img" src="../images/eog/breadboard.png" alt="Breadboard prototype of the EOG circuit" />
+          </div>
+          <div>
+            <ul class="compact-list">
+              <li>Resolved DC drift by adding a bleed resistor after AC‑coupling to provide an input bias path; removed an over‑aggressive low‑pass that attenuated the band of interest.</li>
+              <li>Reduced common‑mode/EMI by placing a grounded foil plane under the circuit and improving cable routing.</li>
+              <li>Verified clean left/right waveforms after conditioning; centered output around 2.5&nbsp;V for 0–5&nbsp;V ADC range.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PCB DESIGN -->
+    <section class="section">
+      <div class="block">
+        <h2>PCB DESIGN</h2>
+        <div class="two-col">
+          <div>
+            <img class="overview-img" src="../images/eog/pcb_front.png" alt="First revision PCB" />
+          </div>
+          <div>
+            <ul class="compact-list">
+                <li><strong>Revision A findings.</strong> Needed to move the TRS jack closer to the edge; increase trace widths; and add ground copper pour/shielding.</li>
+                <li><strong>Assembly issue encountered.</strong> We observed ~20–30&nbsp;MΩ resistance causing leakage near the INA818 pads. We plan to reflow with a stencil or switch to a DIP part (e.g., INA118/INA128).</li>
+                <li><strong>Demo choice.</strong> Because of the leakage risk and timeline, we used the breadboard build for the demo.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO VIDEO -->
+    <section class="section">
+      <div class="block">
+        <h2>DEMO</h2>
+        <div class="video tall">
+          <!-- Replace VIDEO_ID with your YouTube ID -->
+          <iframe src="https://www.youtube.com/embed/HerrcG6GCVk" title="EOG interface demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACKNOWLEDGEMENT & REFERENCE -->
+    <section class="section">
+      <div class="block">
+        <h2>REFERENCES</h2>
+        <details class="ref-list">
+          <summary>References (20)</summary>
+          <ol class="compact-list">
+            <li>Krebs, C., Weinberg, J., & Akesson, E. (2016). <em>最新彩色圖解神經科學</em>（楊韻如、李琪宏 譯）。合記。（原著出版於 2012 年）。</li>
+            <li>內政部戶政司（2018/04/10）。老年人口突破 14% 內政部：臺灣正式邁入高齡社會。<a href="https://www.moi.gov.tw/News_Content.aspx?n=2&s=11663">https://www.moi.gov.tw/News_Content.aspx?n=2&s=11663</a></li>
+            <li>阿簡（2011/02/08）。眼動儀 DIY‑webcam 的應用。阿簡生物筆記。<a href="http://a-chien.blogspot.com/2011/02/diy-webcam.html?m=1">http://a-chien.blogspot.com/2011/02/diy-webcam.html?m=1</a></li>
+            <li>瓶子裡的小狐狸（2015/10/27）。Unity3D 製作 Cardboard 全景 VR 應用。<a href="https://szeching.com/how-to-make-cardboard-vr-app-with-unity3d/">https://szeching.com/how-to-make-cardboard-vr-app-with-unity3d/</a></li>
+            <li>衛生福利部統計處（2021/12/02）。國際身心障礙者日衛生福利統計通報。<a href="https://www.mohw.gov.tw/dl-72892-c0bae2d9-645f-46ef-890b-330d32d4102b.html">https://www.mohw.gov.tw/dl-72892-c0bae2d9-645f-46ef-890b-330d32d4102b.html</a></li>
+            <li>3M. (2023). 3M™ 心電圖電極貼片 2228。<a href="https://www.3m.com.tw/3M/zh_TW/p/d/v000183146/">https://www.3m.com.tw/3M/zh_TW/p/d/v000183146/</a></li>
+            <li>AHMSVILLE. (2020). 3D Printed Google Cardboard VR Headset. Cults. <a href="https://cults3d.com/en/3d-model/gadget/3d-printed-google-cardboard-vr-headset">https://cults3d.com/en/3d-model/gadget/3d-printed-google-cardboard-vr-headset</a></li>
+            <li>Apple. (2023). Apple Vision Pro. <a href="https://www.apple.com/apple-vision-pro/">https://www.apple.com/apple-vision-pro/</a></li>
+            <li>Barlow, D. H., Durand, V. M., & Hofmann, S. G. (2018). <em>Abnormal Psychology: An Integrative Approach</em> (8th). Cengage Learning.</li>
+            <li>Merletti, R., & Cerone, G. L. (2020). Surface EMG detection, conditioning and pre‑processing: Best practices. <em>Journal of Electromyography and Kinesiology</em>, 54, 102440. <a href="https://doi.org/10.1016/j.jelekin.2020.102440">https://doi.org/10.1016/j.jelekin.2020.102440</a></li>
+            <li>Mishra, S., Kim, Y. S., Intarasirisawat, J., Kwon, Y. T., Lee, Y., Mahmood, M., Lim, H. R., Herbert, R., Yu, K. J., Ang, C. S., & Yeo, W. H. (2020). Soft, wireless periocular wearable electronics for real‑time detection of eye vergence in a virtual reality toward mobile eye therapies. <em>Science Advances</em>, 6(11), eaay1729. <a href="https://doi.org/10.1126/sciadv.aay1729">https://doi.org/10.1126/sciadv.aay1729</a></li>
+            <li>Molina, J. (1994). Design a 60 Hz Notch Filter With the UAF42. Burr‑Brown Application Bulletin. <a href="https://www.ti.com/lit/an/sbfa012/sbfa012.pdf">https://www.ti.com/lit/an/sbfa012/sbfa012.pdf</a></li>
+            <li>Papaioannou, T., Voinescu, A., Petrini, K., & Stanton Fraser, D. (2022). Efficacy and Moderators of Virtual Reality for Cognitive Training in People with Dementia and Mild Cognitive Impairment: A Systematic Review and Meta‑Analysis. <em>Journal of Alzheimer’s Disease</em>, 88(4), 1341–1370. <a href="https://doi.org/10.3233/JAD-210672">https://doi.org/10.3233/JAD-210672</a></li>
+            <li>Park, S., Ha, J., Park, J., Lee, K., & Im, C. H. (2022). Brain‑Controlled, AR‑based Home Automation System using SSVEP‑based Brain‑Computer Interface and EOG‑based Eye Tracker: A Feasibility Study for the Elderly End User. <em>IEEE Transactions on Neural Systems and Rehabilitation Engineering</em>. <a href="https://doi.org/10.1109/TNSRE.2022.3228124">https://doi.org/10.1109/TNSRE.2022.3228124</a></li>
+            <li>Programming Electronics Academy. (2021, November 6). Control your keyboard with Arduino! Automate simple tasks! [Video]. YouTube. <a href="https://www.youtube.com/watch?v=_vLLhU3mX1M">https://www.youtube.com/watch?v=_vLLhU3mX1M</a></li>
+            <li>Pu, X., Guo, H., Chen, J., Wang, X., Xi, Y., Hu, C., & Wang, Z. L. (2017). Eye motion triggered self‑powered mechanosensational communication system using triboelectric nanogenerator. <em>Science Advances</em>, 3(7), e1700694. <a href="https://doi.org/10.1126/sciadv.1700694">https://doi.org/10.1126/sciadv.1700694</a></li>
+            <li>Pygame contributors. (2023). Pygame. <a href="https://www.pygame.org/news">https://www.pygame.org/news</a></li>
+            <li>Qiu, R., Gu, Y., Xie, C., Wang, Y., Sheng, Y., Zhu, J., Yue, Y., & Cao, J. (2022). Virtual reality‑based targeted cognitive training program for Chinese older adults: A feasibility study. <em>Geriatric Nursing</em>, 47, 35–41.</li>
+            <li>Texas Instruments. (2010). UAF42 Universal Active Filter datasheet.</li>
+            <li>Texas Instruments. (2023). INA818 Precision Instrumentation Amplifier datasheet.</li>
+          </ol>
+        </details>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>

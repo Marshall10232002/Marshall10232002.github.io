@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Focus Chair | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page-specific styles (reuse palette/type from style.css) */
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;
+      --space-block: 1.25rem;
+      --radius: 12px;
+      --rule: #bbb;
+      --soft: #e8e8e8;
+    }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align: center; margin-bottom: var(--space-block); }
+    .subtitle { opacity: .8; font-size: .95rem; }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+
+    /* One outer card per section */
+    .block { border:1px solid var(--soft); border-radius: var(--radius); background:#fff; padding: var(--space-block); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .block h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid var(--rule); }
+    .block h2 + *{ margin-top:.25rem; }
+
+    .spacious-list { margin:0; padding-left:1.1rem; }
+    .spacious-list li { margin-bottom:.65rem; line-height:1.6; }
+    .compact-list li { margin-bottom:.4rem; line-height:1.4; }
+
+    /* Media helpers */
+    .overview-img { width:100%; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; object-fit:cover; }
+    .award-img { width:40%; margin-top:1rem; border-radius: var(--radius); display:block; margin-left:auto; margin-right:auto; }
+
+    /* Video */
+    .video{ position:relative; width:100%; border-radius: var(--radius); overflow:hidden; }
+    .video::before{ content:""; display:block; padding-top:56.25%; }
+    .video > iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; }
+    .video.tall::before{ padding-top:65%; }
+
+    .back { display:inline-block; margin-top: var(--space-block); }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>Interactive Focus Chair</h1>
+      <div class="subtitle">phone detection • posture correction</div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <ul class="spacious-list">
+          <li>Designed the chair to address two issues: smartphone overuse and poor sitting posture.</li>
+          <li>Implemented a custom-trained convolutional neural network (CNN) for real-time phone use detection to encourage focused work and reduce distractions.</li>
+          <li>Integrated MediaPipe-based posture detection to monitor sitting ergonomics and provide corrective feedback.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- DESIGNS -->
+    <section class="section">
+      <div class="block">
+        <h2>DESIGNS</h2>
+        <img class="overview-img" src="../images/chair/design_overview.png" alt="Interactive Focus Chair design overview" />
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS 1 -->
+    <section class="section">
+      <div class="block">
+        <h2>HOW IT WORKS</h2>
+        <img class="overview-img" src="../images/chair/how_it_work_1.png" alt="How it works part 1" />
+        <p>When MediaPipe detects an excessive sitting angle that indicates poor posture, the conveyor belt automatically moves backward, gently pulling the user back into a proper position.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS 2 -->
+    <section class="section">
+      <div class="block">
+        <h2>HOW IT WORKS</h2>
+        <img class="overview-img" src="../images/chair/how_it_work_2.png" alt="How it works part 2" />
+        <p>When the custom CNN recognizes phone use, the chair activates the backrest and conveyor system to eject the user from the chair, to discourage distractions.</p>
+      </div>
+    </section>
+
+
+    <!-- DEMO VIDEO -->
+    <section class="section">
+      <div class="block">
+        <h2>DEMO VIDEO</h2>
+        <div class="video tall">
+          <!-- Replace VIDEO_ID with your YouTube ID -->
+          <iframe src="https://www.youtube.com/embed/Jpl8wycrTGc" title="Interactive Focus Chair demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUMMARY & RECOGNITION -->
+    <section class="section">
+      <div class="block">
+        <h2>SUMMARY &amp; RECOGNITION</h2>
+        <ul class="spacious-list">
+          <li>Addressed smartphone overuse and poor posture using a custom CNN for phone use detection and MediaPipe for posture monitoring.</li>
+          <li>The prototype demonstrated corrective feedback and deterred distractions.</li>
+          <li>Received the Best Popularity Award.</li>
+        </ul>
+        <img class="award-img" src="../images/chair/award.png" alt="Best Popularity Award" />
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>
