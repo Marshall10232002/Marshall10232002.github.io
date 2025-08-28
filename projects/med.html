@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medicine Sorting Machine | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page-specific, light styles (works with your existing style.css) */
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;  /* uniform spacing between sections */
+      --space-block: 1rem;    /* spacing inside blocks */
+      --radius: 12px;
+    }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align:center; margin-bottom: var(--space-block); }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+    .block {
+      border:1px solid #e8e8e8;
+      border-radius: var(--radius);
+      background:#fff;
+      padding: calc(var(--space-block) + 0.75rem) 1.25rem; /* more vertical + wider left/right */
+      box-shadow:0 1px 2px rgba(0,0,0,.03);
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+    .section h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid #bbb; }
+    .block h3 { font-size:1rem; color:#222; margin:0 0 .75rem; padding-bottom:.35rem; border-bottom:2px solid #bbb; }
+
+    .overview-img { width:100%; max-width:1000px; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; aspect-ratio: 16/9; object-fit: cover; }
+
+    /* Simple two-column grid that stacks on small screens */
+    .two-col { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--space-block); align-items:stretch; }
+    @media (max-width: 720px){ .two-col { grid-template-columns: 1fr; } }
+    .two-col > .block { height: 100%; display: flex; flex-direction: column; }
+
+    .figure { display:flex; gap: 1.25rem; align-items:flex-start; flex-wrap:wrap; }
+    .figure img { width:min(460px,100%); border-radius: var(--radius); background:#f7f7f7; aspect-ratio: 4/3; object-fit: cover; }
+    .figure .notes { flex:1 1 260px; }
+
+    .spacious-list li{ margin-bottom:.5rem; line-height:1.5; }
+
+    .block ol,
+    .block ul { padding-left: 1.1rem; }
+
+    /* Minimal table styling for truth tables */
+    .kv-table { width:100%; border-collapse: collapse; }
+    .kv-table th, .kv-table td { border:1px solid #e0e0e0; padding:.4rem .5rem; text-align:center; }
+    .kv-table th { background:#f7f7f7; font-weight:600; }
+
+    .back { display:inline-block; margin-top: var(--space-block); }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>MEDICINE SORTING MACHINE</h1>
+      <div class="subtitle">microcontroller & digital circuit </div>
+    </header>
+
+    <!-- OVERVIEW PHOTO -->
+    <section class="section">
+      <div class="block">
+        <!-- Replace the src with your overview photo path -->
+        <img class="overview-img" src="../images/ med/overview.png" alt="Medicine sorting machine overview" />
+      </div>
+    </section>
+
+    <!-- OVERVIEW DESCRIPTION (Motivation & Goals) -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <ul class="spacious-list">
+            <li>Automated daily pill sorting to prevent missed doses across four time slots (morning, noon, evening, bedtime).</li>
+            <li>Designed a low-cost dispenser that identifies the active slot, dispenses the set number of pills, and returns to home.</li>
+            <li>Developed a cartridge and track system with a geared wheel for single-pill dispensing, adaptable with hole sizes for different pill types.</li>
+            <li>Implemented drivetrain with TT motor for track movement; servos for opening/closing the cartridge lid; distance/laser sensors and photogates for position detection.</li>
+            <li>Programmed Arduino controller with keypad interface; added logic circuit with Schmitt trigger to encode four photogate signals into digital inputs.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+  <div class="block">
+    <h2>CIRCUIT DESIGN</h2>
+    <img src="../images/ med/circuit.png" alt="Circuit / wiring overview" style="width:100%; border-radius: var(--radius); background:#f7f7f7; display:block;" />
+  </div>
+</section>
+
+<section class="section">
+  <div class="two-col">
+    <div class="block block--plain">
+      <h2>ENCODER LOGIC DIAGRAM</h2>
+      <img class="logic-img" src="../images/ med/encoder_logic.png" alt="Encoder logic diagram" />
+    </div>
+    <div class="block">
+      <h2>CIRCUIT LOGIC</h2>
+      <p>Four photogate signals (Y3…Y0, 1 = light, 0 = blocked) are encoded to digital outputs (A1, A2) with a validity flag (V):</p>
+      <table class="kv-table" aria-label="Photogate encoding truth table">
+        <thead>
+          <tr>
+            <th>Y3</th><th>Y2</th><th>Y1</th><th>Y0</th>
+            <th>A1</th><th>A2</th><th>V</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>x</td><td>x</td><td>0</td></tr>
+          <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+          <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+          <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+          <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+    <!-- CONTROL LOGIC | DEMO VIDEO -->
+<section class="section">
+  <div class="two-col">
+    <div class="block">
+      <h2>CONTROL LOGIC</h2>
+      <ol class="spacious-list">
+        <li><strong>Home</strong>: Return carriage to start (TT motor for a fixed duration) and confirm with sensor.</li>
+        <li><strong>Open</strong>: Servo opens cartridge lid.</li>
+        <li><strong>Select slot</strong>: Read encoded photogate state → active time slot (morning / noon / evening / bedtime).</li>
+        <li><strong>Dispense</strong>: For the entered dose count, rotate the geared wheel to drop pills one by one (A/B types supported).</li>
+        <li><strong>Advance</strong>: Drive to the next slot; repeat until all scheduled slots are served.</li>
+        <li><strong>Close</strong>: Servo closes lid and return to home.</li>
+      </ol>
+    </div>
+    <div class="block">
+      <h2>DEMO VIDEO</h2>
+      <!-- Embedded YouTube Shorts -->
+      <iframe
+        width="100%"
+        height="315"
+        src="https://www.youtube.com/embed/0usxA1PUHg8?rel=0"
+        title="Medicine Sorting Machine Demo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+    <!-- SUMMARY -->
+    <section class="section">
+      <div class="block">
+        <h2>SUMMARY</h2>
+        <ul class="spacious-list">
+          <li>Built a working dispenser with reliable position sensing and per‑slot dosing.</li>
+          <li><em>Next</em>: add basic machine vision for pill classification, increase supported medicines, integrate reminders, and support multiple cartridge types.</li>
+        </ul>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5DOF Self‑Landing Rocket | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Page-specific, light styles (works with your existing style.css) */
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;  /* uniform spacing between sections */
+      --space-block: 1rem;    /* spacing inside blocks */
+      --radius: 12px;
+      --rule: #bbb;
+    }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align:center; margin-bottom: var(--space-block); }
+    .subtitle { opacity:.8; font-size:.95rem; }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+    .block {
+      border:1px solid #e8e8e8;
+      border-radius: var(--radius);
+      background:#fff;
+      padding: calc(var(--space-block) + 0.75rem) 1.25rem; /* more vertical + wider left/right */
+      box-shadow:0 1px 2px rgba(0,0,0,.03);
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+    .section h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid var(--rule); }
+    .block h3 { font-size:1rem; color:#222; margin:0 0 .75rem; padding-bottom:.35rem; border-bottom:2px solid var(--rule); }
+
+    .overview-img { width:100%; max-width:1000px; height:auto; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; }
+
+    /* Simple two-column grid that stacks on small screens */
+    .two-col {
+      display:grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: var(--space-block);
+      align-items: stretch;
+    }
+    @media (max-width: 720px){ .two-col { grid-template-columns: 1fr; } }
+    .two-col > .block {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .figure { display:flex; gap: 1.25rem; align-items:flex-start; flex-wrap:wrap; }
+    .figure img { width:auto; max-width:min(460px,100%); height:auto; border-radius: var(--radius); background:#f7f7f7; }
+    .figure .notes { flex:1 1 260px; }
+
+    .spacious-list li{ margin-bottom:.5rem; line-height:1.5; }
+
+    .block ol,
+    .block ul { padding-left: 1.1rem; }
+
+    /* Minimal table styling */
+    .kv-table { width:100%; border-collapse: collapse; }
+    .kv-table th, .kv-table td { border:1px solid #e0e0e0; padding:.4rem .5rem; text-align:center; }
+    .kv-table th { background:#f7f7f7; font-weight:600; }
+
+    .tag { display:inline-block; border:1px solid #e0e0e0; border-radius:999px; padding:.15rem .5rem; font-size:.8rem; margin:.15rem .25rem 0 0; }
+
+    .back { display:inline-block; margin-top: var(--space-block); }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>5DOF SELF‑LANDING ROCKET</h1>
+      <div class="subtitle">Gain‑Scheduled LQR with Disturbance Observer • Dynamics</div>
+    </header>
+
+    <!-- OVERVIEW PHOTO -->
+    <section class="section">
+      <div class="block">
+        <img class="overview-img" src="../images/rocket/overview.png" alt="Rocket lander project overview" />
+      </div>
+    </section>
+
+    <!-- OVERVIEW DESCRIPTION -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <ul class="spacious-list">
+          <li>Built a 5DOF vertical landing simulator (roll excluded from control) with time‑varying mass & inertia, wind, and actuator limits.</li>
+          <li>Controller: gain‑scheduled LQR (table over mass & thrust) + disturbance observer (DOB) for lateral disturbance rejection.</li>
+          <li>Actuator/TVC modeling: 2nd‑order low‑pass dynamics and geometric projection of the thrust vector onto a feasible actuation surface.</li>
+          <li>Reference profile: 8‑phase ascent/descent to reach 50 m and achieve a soft, accurate landing within constraints.</li>
+          <li>Outcome: DOB notably improves robustness; succeeds where baseline LQR fails under strong wind with limited bandwidth.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MISSION SPECS (under Overview) -->
+    <section class="section">
+      <div class="block">
+        <h2>MISSION SPECS</h2>
+        <table class="kv-table" aria-label="Mission specification table">
+          <thead>
+            <tr>
+              <th>Altitude Goal</th>
+              <th>Landing Zone</th>
+              <th>Touchdown Speed</th>
+              <th>Fuel Limit</th>
+              <th>Thrust Window</th>
+              <th>Sample Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>50 m</td>
+              <td>≤ 10 m diameter</td>
+              <td>≤ 0.3 m/s</td>
+              <td>≤ 40 kg</td>
+              <td>1100–2500 N</td>
+              <td>0.01 s</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TRAJECTORY & REFERENCE DESIGN -->
+    <section class="section">
+      <div class="block">
+        <h2>TRAJECTORY & REFERENCE DESIGN</h2>
+        <table class="kv-table" aria-label="Trajectory parameters">
+          <tbody>
+            <tr><th colspan="2" style="text-align:left;">Ascent</th></tr>
+            <tr><td>Ascent velocity</td><td>v<sub>asc</sub> = 5.67 m/s</td></tr>
+            <tr><td>Ascent acceleration</td><td>a<sub>acc</sub> = 0.83 m/s<sup>2</sup></td></tr>
+            <tr><td>Ascent deceleration</td><td>a<sub>dec</sub> = 1.50 m/s<sup>2</sup></td></tr>
+
+            <tr><th colspan="2" style="text-align:left;">Descent</th></tr>
+            <tr><td>Initial descent velocity</td><td>v<sub>d1</sub> = 7.22 m/s</td></tr>
+            <tr><td>Final descent velocity before landing</td><td>v<sub>d2</sub> = 3.00 m/s</td></tr>
+            <tr><td>Descent acceleration</td><td>a<sub>acc,d</sub> = 1.28 m/s<sup>2</sup></td></tr>
+            <tr><td>First descent deceleration</td><td>a<sub>dec1,d</sub> = 1.06 m/s<sup>2</sup></td></tr>
+            <tr><td>Final descent deceleration</td><td>a<sub>dec2,d</sub> = 1.50 m/s<sup>2</sup></td></tr>
+
+            <tr><th colspan="2" style="text-align:left;">Cruise distances in descent</th></tr>
+            <tr><td>Distance during cruise phase 1</td><td>d<sub>5</sub> = 6.25 m</td></tr>
+            <tr><td>Distance during cruise phase 2</td><td>d<sub>7</sub> = 0.00 m</td></tr>
+
+            <tr><th colspan="2" style="text-align:left;">Landing conditions</th></tr>
+            <tr><td>Landing speed</td><td>0.300 m/s</td></tr>
+            <tr><td>Total flight time</td><td>26.43 s</td></tr>
+            <tr><td>Total fuel used</td><td>39.84 kg</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:.75rem;">The algorithm iteratively evaluates combinations of these parameters to identify feasible profiles that satisfy critical constraints: reaching the target altitude of 50&nbsp;meters, maintaining acceptable thrust and fuel limits, and achieving a final landing speed below 0.3&nbsp;m/s.</p>
+      </div>
+    </section>
+
+    <!-- CONTROLLER ARCHITECTURE -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>GAIN‑SCHEDULED DLQR</h2>
+          <ul class="spacious-list">
+            <li>A 5DOF model was linearized around hover, and control gains were pre‑computed over a grid of <strong>mass</strong> (50–200 kg) × <strong>thrust</strong> (0.1–2500 N).</li>
+            <li>During flight, real‑time bilinear interpolation selects the appropriate feedback gain <strong>K(m, T)</strong>.</li>
+            <li>The weighting matrices <strong>Q/R</strong> were tuned to balance vertical stability, landing accuracy, and fuel efficiency.</li>
+          </ul>
+          <img src="../images/rocket/control_arch.png" alt="Control architecture diagram (gain scheduling)" />
+        </div>
+        <div class="block">
+          <h2>DISTURBANCE OBSERVER (DOB)</h2>
+          <ul class="spacious-list">
+            <li>An augmented state observer estimates external lateral disturbances (<em>d̂</em>), which are canceled via feed‑forward compensation (see Eqs. (1)).</li>
+            <li>Observer gains are selected by pole placement on the augmented model. The discrete dynamics use a first‑order approximation: <strong>A<sub>d</sub> ≈ I + AΔt</strong>, <strong>B<sub>d</sub> ≈ BΔt</strong>.</li>
+            <li>The overall control law integrates the DOB: (see Eqs. (2)), where <strong>K<sub>d</sub></strong> emphasizes lateral disturbance rejection.</li>
+          </ul>
+          <img src="../images/rocket/dob.png" alt="DOB block diagram" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTUATOR & TVC MODELING -->
+    <section class="section">
+      <div class="block">
+        <h2>ACTUATOR & TVC MODELING</h2>
+        <div class="figure">
+          <img src="../images/rocket/actuator.png" alt="Thrust vector projection and actuator dynamics" />
+          <div class="notes">
+            <ul class="spacious-list">
+              <li>TVC bandwidth tested at 3 Hz and 4 Hz using a 2nd‑order low‑pass filter.</li>
+              <li>Desired thrust vector projected onto a tangent plane of a hemispherical constraint to simulate actuator feasibility.</li>
+              <li>Roll injected as a 0.25 rad, 1 rad/s oscillation to emulate imperfect roll control.</li>
+              <li>Rotating wind field at 0.2 Hz; Specific impulse 130 s; g=9.81 m/s²; d<sub>cn</sub>=0.67 m.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section">
+      <div class="block">
+        <h2>RESULTS</h2>
+        <div class="two-col">
+          <div>
+          <h3>Summary Table</h3>
+            <table class="kv-table" aria-label="Result summary">
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Fuel (kg)</th>
+                  <th>RMSE y (m)</th>
+                  <th>RMSE z (m)</th>
+                  <th>Max y‑z (m)</th>
+                  <th>Landing v (m/s)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>3 Hz, moderate wind</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
+                <tr><td>3 Hz, moderate (DOB)</td><td>27.56</td><td>0.13</td><td>0.06</td><td>0.22</td><td>-0.31</td></tr>
+                <tr><td>4 Hz, moderate wind</td><td>27.56</td><td>0.11</td><td>0.07</td><td>0.19</td><td>-0.31</td></tr>
+                <tr><td>4 Hz, moderate (DOB)</td><td>27.56</td><td>0.13</td><td>0.06</td><td>0.22</td><td>-0.31</td></tr>
+                <tr><td>4 Hz, strong wind</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
+                <tr><td>4 Hz, strong (DOB)</td><td>27.67</td><td>0.99</td><td>0.43</td><td>1.64</td><td>-0.38</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RIGHT: Figures (stacked) -->
+          <div style="display:flex; flex-direction:column; height:100%;">
+            <h3>Figures</h3>
+            <div class="figure" style="gap:.75rem; flex:1;">
+              <img src="../images/rocket/results_moderate_3hz.png" alt="3 Hz moderate wind results" />
+              <img src="../images/rocket/resutls_moderate_4hz.png" alt="4 Hz moderate wind results" />
+              <img src="../images/rocket/results_strong_4hz.png" alt="4 Hz strong wind results" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUMMARY & NEXT -->
+    <section class="section">
+      <div class="block">
+        <h2>SUMMARY & NEXT</h2>
+        <ul class="spacious-list">
+          <li>Gain‑scheduled LQR + DOB improves landing robustness under wind and actuator limits; meets mission constraints.</li>
+          <li>Next: use field wind data; HIL or real‑time implementation; consider splitting controllers to cut compute cost.</li>
+          <li>Design and add the <strong>roll control system</strong>to the rocket for complete 6 Dof rocket control.</li>
+        </ul>
+        <p>
+          <a class="btn-outline" href="https://github.com/Marshall10232002/5DOF_Self-Landing_Rocket" target="_blank" rel="noopener">GitHub Repo</a>
+          &nbsp;•&nbsp;
+          <a class="btn-outline" href="https://drive.google.com/file/d/1UFRRRoFfDaMUiuIfMFAjI3cyIO3flURZ/view?usp=sharing" target="_blank" rel="noopener">Project Report (PDF)</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ACKNOWLEDGMENT -->
+    <section class="section">
+      <div class="block">
+        <h2>ACKNOWLEDGMENT</h2>
+        <p>
+          This work was conducted as part of my contributions in our club. Learn more about the club here:
+          <a class="btn-outline" href="https://www.facebook.com/profile.php?id=61558308603436" target="_blank" rel="noopener">Club Page</a>.
+        </p>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>
