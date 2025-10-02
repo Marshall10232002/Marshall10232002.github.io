@@ -5,21 +5,165 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spherical Robot | Marshall Chang</title>
   <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Match the stair-climbing page look */
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;     /* spacing between sections */
+      --space-block: 1.25rem;    /* spacing inside blocks */
+      --radius: 12px;
+      --rule: #bbb;
+      --soft: #e8e8e8;
+    }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align: center; margin-bottom: var(--space-block); }
+    .subtitle { opacity: .8; font-size: .95rem; }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+
+    /* Card */
+    .block { border:1px solid var(--soft); border-radius: var(--radius); background:#fff; padding: var(--space-block); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .block h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid var(--rule); }
+    .block h2 + *{ margin-top:.25rem; }
+
+    .spacious-list { margin:0; padding-left:1.1rem; }
+    .spacious-list li { margin-bottom:.65rem; line-height:1.6; }
+    .compact-list li { margin-bottom:.4rem; line-height:1.4; }
+
+    /* Media helpers */
+    .overview-img { width:100%; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; object-fit:cover; }
+
+    /* Two-column layout */
+    .two-col { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1.5rem; align-items:stretch; }
+    .two-col > .block{ height:100%; display:flex; flex-direction:column; }
+    @media (max-width: 720px){ .two-col { grid-template-columns:1fr; } }
+
+    /* 16:9 video */
+    .video{ position:relative; width:100%; border-radius: var(--radius); overflow:hidden; }
+    .video::before{ content:""; display:block; padding-top:56.25%; }
+    .video > iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; }
+    .video.tall::before{ padding-top:65%; }
+
+    .caption { font-size:.92rem; opacity:.9; margin-top:.25rem; }
+    .back { display:inline-block; margin-top: var(--space-block); }
+  </style>
 </head>
 <body>
-  <main style="max-width:800px;margin:auto;padding:2rem 1rem;">
-    <h1>Spherical Robot</h1>
-    <p><em>Rapid energy release mechanism.</em></p>
-    <img src="../images/spherical-robot.jpg" style="width:100%;border-radius:12px;" />
-    <h2>Overview</h2>
-    <p>Explain the goal, challenges, and your contribution …</p>
-    <h2>Key Tech</h2>
-    <ul>
-      <li>Custom MuJoCo simulation with Gym wrapper</li>
-      <li>LQR + disturbance observer for baseline control</li>
-      <li>SAC fine-tuning for trajectory tracking</li>
-    </ul>
-    <a class="btn-outline" href="../index.html#projects">← Back to projects</a>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>Dual‑Mode Spherical Robot</h1>
+      <div class="subtitle">omni‑directional rolling • impulsive momentum actuation</div>
+    </header>
+
+    <!-- OVERVIEW IMAGE (image only) -->
+    <section class="section">
+      <div class="block">
+        <img class="overview-img" src="../images/spherical/overview.png" alt="Spherical robot overview image" />
+      </div>
+    </section>
+
+    <!-- OVERVIEW (separate text block) -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <ul class="spacious-list compact-list">
+          <li><strong>Two driving modes:</strong> Rolling for stable locomotion; Impulsive momentum for terrain escape with torque bursts.</li>
+          <li><strong>Mechanism:</strong> Dual-pendulum and bevel gear design enables omni-directional motion.</li>
+          <li><strong>Control:</strong> Low-level PI loop on Arduino; high-level controller switches modes.</li>
+          <li><strong>Expandability:</strong> Modular design for faster development and adaptability.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ITERATIONS PICTURE -->
+    <section class="section">
+      <div class="block">
+        <h2>ITERATIONS</h2>
+        <img class="overview-img" src="../images/spherical/iterations.png" alt="Design iterations" />
+      </div>
+    </section>
+
+    <!-- MECHANISM DESIGN | IMPULSIVE CONTROL STRATEGY -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>MECHANISM DESIGN</h2>
+          <img class="overview-img" src="../images/spherical/mechanism.png" alt="Mechanism design drawing" />
+          <div class="caption">Mechanical structure: left view highlights modules (green: power, purple: control, pink: actuation); right view shows internal parts—1: motor, 2: main axis, 3: auxiliary axis, 4: bevel gear set, 5: pendulum.</div>
+        </div>
+        <div class="block">
+          <h2>IMPULSIVE CONTROL STRATEGY</h2>
+          <img class="overview-img" src="../images/spherical/impulsive_strategy.png" alt="Impulsive control strategy diagram" />
+          <div class="caption">Four-phase impulsive strategy: 1) spin-up, 2) cruise, 3) release, 4) closed-loop control.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PI CONTROL VIDEO | PI RESULT IMAGE -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>PI CONTROL EXPERIMENT</h2>
+          <div class="video">
+            <!-- Replace YOUR_VIDEO_ID with actual ID -->
+            <iframe src="https://www.youtube.com/embed/y5_ISx8ADog" title="PI control experiment" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="block">
+          <h2>PI CONTROL RESULT</h2>
+          <img class="overview-img" src="../images/spherical/pi_result.png" alt="PI control result plot" />
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPULSIVE VIDEO | IMPULSIVE IMAGE -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>IMPULSIVE MOMENTUM MODE</h2>
+          <div class="video tall">
+            <!-- Replace YOUR_VIDEO_ID with actual ID -->
+            <iframe src="https://www.youtube.com/embed/1HCj_u-wU6A" title="Impulsive mode demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="block">
+          <h2>IMPULSIVE MOMENTUM RESULT</h2>
+          <img class="overview-img" src="../images/spherical/impulsive_frame.png" alt="Impulsive action snapshot" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 2D RESULTS (one image on top + description below) -->
+    <section class="section">
+      <div class="block">
+        <h2>2D TRAJECTORY RESULTS</h2>
+        <img class="overview-img" src="../images/spherical/2d_results.png" alt="2D trajectory results" />
+        <ul class="spacious-list compact-list">
+          <li>Straight‑line maneuvers at 0°, 30°, 60°, and 90° validate omni‑directional rolling.</li>
+          <li>30° turn trajectory demonstrates sharp‑turn capability.</li>
+          <li>Open‑loop paths track inverse‑kinematics commands along predefined lines.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="section">
+      <div class="block">
+        <h2>SUMMARY</h2>
+        <ul class="spacious-list">
+          <li>Designed and implemented a dual‑mode pendulum‑driven spherical robot for omni‑directional rolling and self-rescue capability.</li>
+          <li>Dynamics modeled with the Lagrangian method and verified in MATLAB/Simulink, matching experimental trends.</li>
+          <li>Closed‑loop PI control reduced IAE by 87%, while impulsive actuation cut escape time by 7.4× and nearly doubled success rate.</li>
+          <li>2D trajectory tests confirmed omni‑directional locomotion, including sharp turns and side‑rolling.</li>
+          <li>Future work: closed‑loop trajectory tracking, stronger actuation for escape, and modular payload integration.</li>
+        </ul>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
   </main>
 </body>
 </html>
