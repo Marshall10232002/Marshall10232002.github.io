@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morphology‑Robust HalfCheetah | Marshall Chang</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root {
+      --maxw: 980px;
+      --space-section: 1rem;
+      --space-block: 1.25rem;
+      --radius: 12px;
+      --rule: #bbb;
+      --soft: #e8e8e8;
+    }
+    main { max-width: var(--maxw); margin: 0 auto; padding: var(--space-outer) 1rem var(--space-outer); }
+    .hero { text-align: center; margin-bottom: var(--space-block); }
+    .subtitle { opacity: .8; font-size: .95rem; }
+
+    .section { margin: 0; }
+    .section + .section { margin-top: var(--space-section); }
+
+    .block { border:1px solid var(--soft); border-radius: var(--radius); background:#fff; padding: var(--space-block); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+    .block h2 { font-size:1.15rem; letter-spacing:.08em; color:#222; margin:0 0 1rem; padding-bottom:.4rem; border-bottom:2px solid var(--rule); }
+    .block h2 + *{ margin-top:.25rem; }
+
+    .spacious-list { margin:0; padding-left:1.1rem; }
+    .spacious-list li { margin-bottom:.65rem; line-height:1.6; }
+    .compact-list li { margin-bottom:.4rem; line-height:1.4; }
+
+    .overview-img { width:100%; border-radius: var(--radius); margin-bottom: var(--space-block); display:block; background:#f7f7f7; object-fit:cover; }
+
+    .two-col { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1.5rem; align-items:stretch; }
+    .two-col > .block{ height:100%; display:flex; flex-direction:column; }
+    @media (max-width: 720px){ .two-col { grid-template-columns:1fr; } }
+
+    .caption { font-size:.92rem; opacity:.9; margin-top:.25rem; }
+    .back { display:inline-block; margin-top: var(--space-block); }
+
+    table { width:100%; border-collapse: collapse; margin: 0 auto; }
+    th, td { border:1px solid #ccc; padding: 0.5rem; text-align: center; }
+    thead th { background:#f5f5f5; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <h1>Morphology HalfCheetah Locomotion</h1>
+      <div class="subtitle">SAC · MuJoCo · domain randomization · morphology‑aware input</div>
+    </header>
+
+    <!-- OVERVIEW DESCRIPTION -->
+    <section class="section">
+      <div class="block">
+        <h2>OVERVIEW</h2>
+        <p>
+This project explores how reinforcement learning agents can adapt to changing body dynamics and environments. We extend the MuJoCo HalfCheetah by randomizing leg lengths and ground friction, then train Soft Actor‑Critic (SAC) policies under different setups. Our focus is on enabling <strong>zero‑shot generalization</strong>—the ability to perform robustly on unseen morphologies and friction levels—by comparing domain randomization, noise injection, and morphology‑aware observations.
+        </p>
+      </div>
+    </section>
+
+    <!-- TWO COL: MUJOCO BASE / RL SETUP -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>MUJOCO BASE ENVIRONMENT</h2>
+          <ul class="spacious-list compact-list">
+            <li><strong>Base:</strong> Gym MuJoCo HalfCheetah</li>
+            <li><strong>Leg segment defaults (m):</strong> back thigh 0.145, back shin 0.150, front thigh 0.133, front shin 0.106</li>
+            <li><strong>Friction coefficient default:</strong> 0.4</li>
+            <li><strong>Action repeat / frame‑skip:</strong> 5; Gym‑compatible API with dynamic XML rebuild per episode</li>
+            <li><strong>Randomization ranges:</strong> Legs (× default): 0.25–2.5; friction: 0.05–0.6</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h2>RL SETUP: ACTION &amp; OBSERVATION</h2>
+          <ul class="spacious-list compact-list">
+            <li><strong>Algorithm:</strong> Soft Actor‑Critic (SAC) for continuous control.</li>
+            <li><strong>Action space:</strong> 6‑D torques in [−1, 1] for actuated joints.</li>
+            <li><strong>Observation (18‑D):</strong> 9 positions + 9 velocities.</li>
+            <li><strong>Extended observation (<em>morphology‑aware</em>):</strong> Append leg lengths to the state vector.</li>
+            <li><strong>noise:</strong> Gaussian observation noise σ = 0.01 for robustness tests.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIMENT VARIANTS -->
+    <section class="section">
+      <div class="block">
+        <h2>EXPERIMENT VARIANTS</h2>
+        <ol class="spacious-list compact-list">
+          <li><strong>Baseline</strong>: fixed default morphology; no noise.</li>
+          <li><strong>Moderate Morphology</strong>: 0.5–1.5× leg lengths, updated every 20 episodes.</li>
+          <li><strong>Morphology</strong>: 0.25–2.5× leg lengths, updated every 20 episodes.</li>
+          <li><strong>Morphology + Noise</strong>: as (3) with observation noise.</li>
+          <li><strong>Morphology Vector Input</strong>: per‑episode randomization with leg lengths fed into observations.</li>
+          <li><strong>Vector + Noise</strong>: as (5) with observation noise.</li>
+          <li><strong>Curriculum</strong>: 4 stages increasing randomness over 3000 episodes.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- TRAINING AND VALIDATION SETUP SIDE BY SIDE -->
+    <section class="section">
+      <div class="two-col">
+        <div class="block">
+          <h2>TRAINING SETUP</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Setting</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Actor/Critic</td>
+                <td>2 layers, 256 units, ReLU</td>
+              </tr>
+              <tr>
+                <td>Optimizer</td>
+                <td>Adam, 3×10⁻⁴</td>
+              </tr>
+              <tr>
+                <td>Discount factor γ</td>
+                <td>0.99</td>
+              </tr>
+              <tr>
+                <td>Batch size</td>
+                <td>256</td>
+              </tr>
+              <tr>
+                <td>Replay buffer size</td>
+                <td>10⁶ samples</td>
+              </tr>
+              <tr>
+                <td>Soft update τ</td>
+                <td>0.005</td>
+              </tr>
+              <tr>
+                <td>Exploration steps</td>
+                <td>10k random steps</td>
+              </tr>
+              <tr>
+                <td>Noise</td>
+                <td>Gaussian, σ = 0.01 (selected runs)</td>
+              </tr>
+              <tr>
+                <td>Random seed</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="block">
+          <h2>VALIDATION SETUP</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Setting</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Friction coefficient</td>
+                <td>Fixed 0.2</td>
+              </tr>
+              <tr>
+                <td>Morphology sweep</td>
+                <td>0.05× → 4.05× in steps</td>
+              </tr>
+              <tr>
+                <td>Observation noise</td>
+                <td>σ = 0.01</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT GRAPH (placeholder image blocks matching style) -->
+    <section class="section">
+      <div class="block">
+        <h2>RESULTS</h2>
+        <img class="overview-img" src="../images/drl_final/overall_comparison.png" alt="Overall robustness comparison" />
+      </div>
+    </section>
+
+    <!-- ANALYSIS AND DISCUSSION -->
+    <section class="section">
+      <div class="block">
+        <h2>ANALYSIS &amp; DISCUSSION</h2>
+        <ul class="spacious-list">
+  <li>Comparing <strong>default</strong>, <strong>mod_rand</strong>, and <strong>rand</strong>, we observe that introducing randomized morphology during training enhances generalization capability.</li>
+  <li>Comparing <strong>rand</strong> and <strong>rand_noise</strong>, we find that injecting noise marginally improves robustness, albeit at the expense of overall performance.</li>
+  <li>Comparing <strong>vec</strong> and <strong>vec_noise</strong>, we observe that injecting noise into the morphology input slightly decreases robustness.</li>
+  <li>Although <strong>Curriculum</strong> training outperforms other randomized training methods, it still underperforms compared to approaches that incorporate morphology input.</li>
+</ul>
+      </div>
+    </section>
+
+    <!-- CONCLUSION -->
+    <section class="section">
+      <div class="block">
+        <h2>CONCLUSION</h2>
+        <ul class="spacious-list">
+  <li>Randomizing morphology improves generalization to unseen configurations.</li>
+  <li>Encoding morphology in the observation provides the strongest robustness.</li>
+  <li>Noise and perturbations add robustness but may reduce performance.</li>
+  <li>Curriculum learning helps but is less effective than morphology-aware input.</li>
+</ul>
+      </div>
+    </section>
+
+    <!-- REPORT LINK -->
+    <section class="section">
+      <div class="block">
+        <h2>REPORT</h2>
+        <p>You can read the full project report here:</p>
+        <p><a class="btn-outline" href="https://drive.google.com/file/d/10x-8DZU62phfF9BaE-yIbLOpn_jVrGPE/view?usp=share_link" target="_blank">View Report (PDF)</a></p>
+      </div>
+    </section>
+
+    <p class="back"><a class="btn-outline" href="../index.html#projects">← Back to projects</a></p>
+  </main>
+</body>
+</html>
