@@ -158,8 +158,6 @@ section{margin-bottom:4rem;}
 footer{text-align:center;font-size:.8rem;color:#888;margin-top:2rem;}
 
 /* ───────────────────────  Page Switching  ────────────────────── */
-.page-section{display:none;}
-.page-section.active{display:block;}
 
 /* ─── Nav divider + spacing ─── */
 nav{
@@ -194,3 +192,13 @@ header{
 .project-card .card-body > *:last-child {
   margin-top: auto;
 }
+
+/* Contact (left) + Experiences & Awards (right); stacked on mobile */
+.grid.contact-awards{flex-direction:column;gap:0;}
+@media (min-width:700px){
+  .grid.contact-awards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:1.5rem;align-items:stretch;}
+}
+.contact-card{overflow-wrap:anywhere;}
+.contact-card h3{margin:0;}
+.contact-card .btn,.contact-card .btn-outline{margin-top:.25rem;}
+.social-row{display:flex;flex-wrap:wrap;gap:.5rem;}

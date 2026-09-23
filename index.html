@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marshall Chang | Portfolio</title>
+  <title>Marshall Chang | ME Ph.D. Student at Purdue University</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -12,12 +12,7 @@
   <header>
     <nav>
       <div class="nav-inner">
-        <a class="brand" href="#projects">Marshall's Portfolio</a>
-        <ul>
-          <li><a href="#projects" class="active">Projects</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+        <a class="brand" href="#about">Marshall Chang</a>
       </div>
     </nav>
   </header>
@@ -29,64 +24,60 @@
         <img src="images/profile.jpeg" alt="Marshall Chang" />
         <h2>Po-Yu (Marshall) Chang</h2>
         <p class="subtitle">
-          Mechanical Engineering Student<br />
-          National Taiwan University · Class of 2025
+          ME Ph.D. Student<br />
+          Purdue University
         </p>
       </div>
 
       <div class="card">
         <h3>About Me</h3>
         <p>
-          I’m a robotics-obsessed engineer who blends <strong>mechanism design</strong>,
-          <strong>control theory</strong>, and <strong>reinforcement learning</strong>,
-          passionate about developing adaptable robotic systems for locomotion and manipulation
-          to support elder care, address labor shortages, and create meaningful societal impact.
+          I received my B.S. in Mechanical Engineering from National Taiwan University and am now
+          pursuing a Ph.D. in Mechanical Engineering at Purdue University. My research interests lie in
+          <strong>robotics</strong>, <strong>control</strong>, and <strong>machine learning</strong>, with a focus on
+          robot learning and legged locomotion. Previously, I developed and controlled a pendulum-driven spherical robot
+          and designed gain-scheduled LQR controllers with disturbance observers for rocket systems. I am currently
+          working on humanoid robot control and evaluation.
         </p>
       </div>
 
-      <div class="card">
-        <h3>Experiences &amp; Awards</h3>
-        <ul>
-          <li><strong>BioRoLa</strong> – Researcher · 2023–2025</li>
-          <li><strong>Stochastic Estimation</strong> – Teaching Assistant · 2025</li>
-          <li><strong>STAR Rocketry</strong> – GNC Designer · 2025</li>
-          <li><strong>Google</strong> - Product Design Engineering Intern · 2024</li>
-          <li><strong>Academia Sinica</strong> - Summer Researcher · 2023</li>
-          <li><strong>ME Student Assoc.</strong> - Director · 2023-2024</li>
-          <li><strong>Mechanical Engineering Makerspace</strong> – Utility Aide · 2023–2025</li>
-          <li><strong>Little Mechanical Engineering Camp</strong> - Coordinator · 2022–2023</li>
-          <li><strong>Presidential Award</strong> · 2023 Spring/Fall 2024 Spring/Fall</li>
-          <li><strong>Fu Bell Scholarship</strong> · Awarded to 2 out of 180 students in the ME Department.</li>
-          <li><strong>Lin Hsiung-Tzuo Education Foundation Scholarship</strong> – Selected from 1,210 students nationwide</li>
-        </ul>
-      </div>
-
-      <div class="grid two-col">
-        <div class="card">
-          <h3>Education</h3>
-          <p><strong>B.S. in Mechanical Engineering</strong><br />
-            National Taiwan University · 2021 – 2025<br />
-            <strong>GPA:</strong> 4.19 / 4.3 &nbsp;&nbsp 3.98/ 4.0<br />
-            <strong>Ranking:</strong> 3 / 210<br />
-            <strong>Key coursework:</strong> Advanced Controller Design, Digital Control, Robust Control, Deep Reinforcement Learning, Mechatronics, Mechanism Design</p>
+      <div class="grid contact-awards">
+        <div class="card contact-card">
+          <h3>Contact</h3>
+          <div class="contact-row">
+            <span>📧</span><div><strong>Email</strong><br />pychang@purdue.edu</div>
+          </div>
+          <div class="contact-row">
+            <span>📍</span><div><strong>Location</strong><br />West Lafayette, IN</div>
+          </div>
+          <div class="social-row">
+            <a class="btn-outline" href="https://github.com/Marshall10232002">GitHub</a>
+            <a class="btn-outline" href="https://www.linkedin.com/in/marshall-chang-b18991282/">LinkedIn</a>
+            <a class="btn" href="mailto:pychang@purdue.edu">Send Email</a>
+          </div>
         </div>
-
         <div class="card">
-          <h3>Technical Skills</h3>
-          <span class="tag">Python</span><span class="tag">MATLAB/Simulink</span>
-          <span class="tag">MuJoCo</span><span class="tag">Reinforcement Learning</span>
-          <span class="tag">Autodesk Inventor</span>
-          <span class="tag">Siemens NX</span>
-          <span class="tag">AutoCAD</span>
-          <span class="tag">Arduino</span>
-          <span class="tag">Raspberry Pi</span>
+          <h3>Experiences &amp; Awards</h3>
+          <ul>
+            <li><strong>BioRoLa</strong> – Researcher · 2023–2025</li>
+            <li><strong>Stochastic Estimation</strong> – Teaching Assistant · 2025</li>
+            <li><strong>STAR Rocketry</strong> – GNC Designer · 2025</li>
+            <li><strong>Google</strong> - Product Design Engineering Intern · 2024</li>
+            <li><strong>Academia Sinica</strong> - Summer Researcher · 2023</li>
+            <li><strong>ME Student Assoc.</strong> - Director · 2023-2024</li>
+            <li><strong>Mechanical Engineering Makerspace</strong> – Utility Aide · 2023–2025</li>
+            <li><strong>Little Mechanical Engineering Camp</strong> - Coordinator · 2022–2023</li>
+            <li><strong>Presidential Award</strong> · 2023 Spring/Fall 2024 Spring/Fall</li>
+            <li><strong>Fu Bell Scholarship</strong> · Awarded to 2 out of 180 students in the ME Department.</li>
+            <li><strong>Lin Hsiung-Tzuo Education Foundation Scholarship</strong> – Selected from 1,210 students nationwide</li>
+          </ul>
         </div>
       </div>
 
     </section>
 
-    <!-- PROJECTS (default active to avoid FOUC) -->
-    <section id="projects" class="page-section active">
+    <!-- PROJECTS -->
+    <section id="projects" class="page-section">
       <h2 class="section-title">My Projects</h2>
       <p class="section-sub">
         Here are some of the projects I've worked on during my studies and personal time. Each project represents a different aspect of my learning journey and technical growth.
@@ -287,29 +278,8 @@
         </a>
       </div> <!-- end .projects-grid -->
     </section> <!-- end #projects -->
-
-    <!-- CONTACT -->
-    <section id="contact" class="page-section">
-      <h2 class="section-title">Get in Touch</h2>
-      <p class="section-sub">Always up for a collaboration, research chat, or coffee!</p>
-
-      <div class="card contact-card">
-        <div class="contact-row">
-          <span>📧</span><div><strong>Email</strong><br />marshall.poyu.chang@gmail.com</div>
-        </div>
-        <div class="contact-row">
-          <span>📍</span><div><strong>Location</strong><br />Taipei, Taiwan</div>
-        </div>
-        <div class="social-row">
-          <a class="btn-outline" href="https://github.com/Marshall10232002">GitHub</a>
-          <a class="btn-outline" href="https://www.linkedin.com/in/marshall-chang-b18991282/">LinkedIn</a>
-          <a class="btn" href="mailto:marshall.poyu.chang@gmail.com">Send Email</a>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <footer>© 2025 Marshall Chang</footer>
-  <script src="script.js"></script>
+  <footer>© 2026 Marshall Chang</footer>
 </body>
 </html>
